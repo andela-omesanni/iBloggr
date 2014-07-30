@@ -55,6 +55,7 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
 	res.jsonp(req.blog);
+	res.jsonp(req.comment);
 };
 
 /**
@@ -88,7 +89,7 @@ exports.delete = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			Comment.find({'blogId':blog._id}).exec(function(err, comment) {
+			Comment.find({blogId: blog._id}).exec(function(err, comment) {
                  comment.remove();
                  res.jsonp(blog);
                  res.jsonp(comment);
@@ -118,7 +119,7 @@ exports.list = function(req, res, next) {
 /**
  * Add a comment
  */
- exports.addComment = function(req, res, next) {
+ exports.addComment = function(req, res) {
        var comment = new Comment(req.body);
 	   comment.commentOwner = req.user;
 	   comment.blogId = req.blogId;
@@ -129,10 +130,44 @@ exports.list = function(req, res, next) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(blog);
+			res.jsonp(comment);
 		}
 	   });
  };
+
+ /**
+ * Delete a comment
+ */
+ exports.deleteComment = function(req, res) {
+    var comment = req.comment;
+
+	comment.remove(function(err) {
+		if (err) {
+			return res.send(400, {
+				message: getErrorMessage(err)
+			});
+		} else {
+               res.jsonp(comment);
+		}
+	});
+};
+
+ /**
+ * Like a Post
+ */
+ exports.likePost = function(req, res) {
+    var like = req.blog;
+
+	comment.remove(function(err) {
+		if (err) {
+			return res.send(400, {
+				message: getErrorMessage(err)
+			});
+		} else {
+               res.jsonp(comment);
+		}
+	});
+};
 
 /**
  * Blog middleware
@@ -141,7 +176,7 @@ exports.blogByID = function(req, res, next, id) {
 	Blog.findById(id).populate('user', 'username').exec(function(err, blog) {
 		if (err) return next(err);
 		if (!blog) return next(new Error('Failed to load blog ' + id));
-        Comment.find({'blogId':blog._id}).exec(function(err, comment) {
+        Comment.find({blogId: blog._id}).exec(function(err, comment) {
              req.blog = blog;
              req.comment = comment;
 		     next();
