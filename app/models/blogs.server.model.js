@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 /**
- * Article Schema
+ * Blog Schema
  */
 var BlogSchema = new Schema({
 	created: {
@@ -29,7 +29,7 @@ var BlogSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	comments: [{
+	/*comments: [{
 		commOwner: {
 		    type: Schema.ObjectId,
 		    ref: 'User'
@@ -44,7 +44,7 @@ var BlogSchema = new Schema({
 		     default: Date.now
 		}
 
-	}],
+	}],*/
 	likes: [{
 		score : {
 			type: Number,

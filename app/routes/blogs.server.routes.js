@@ -17,8 +17,8 @@ module.exports = function(app) {
 		.put(users.requiresLogin, blogs.hasAuthorization, blogs.update)
 		.delete(users.requiresLogin, blogs.hasAuthorization, blogs.delete);
 
-	app.route('/blogs/:blogId/comments/:commentId')
-	    .get(users.requiresLogin, blogs.hasAuthorization, blogs.deleteComment)
+	app.route('/comments')
+	    .post(users.requiresLogin, blogs.addComment)
 
 	// Finish by binding the article middleware
 	app.param('blogId', blogs.blogByID);

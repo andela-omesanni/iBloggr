@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Blog = mongoose.model('Blog'),
+	Comment = mongoose.model('Comment'),
 	_ = require('lodash');
 
 /**
@@ -76,7 +77,7 @@ exports.update = function(req, res) {
 };
 
 /**
- * Delete an blog
+ * Delete a blog
  */
 exports.delete = function(req, res) {
 	var blog = req.blog;
@@ -87,7 +88,12 @@ exports.delete = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(blog);
+			Comment.find({'blogId':blog._id}).exec(function(err, comment) {
+                 comment.remove();
+                 res.jsonp(blog);
+                 res.jsonp(comment);
+			});
+			
 		}
 	});
 };
@@ -110,14 +116,37 @@ exports.list = function(req, res, next) {
 };
 
 /**
+ * Add a comment
+ */
+ exports.addComment = function(req, res, next) {
+       var comment = new Comment(req.body);
+	   comment.commentOwner = req.user;
+	   comment.blogId = req.blogId;
+
+	   comment.save(function(err) {
+		if (err) {
+			return res.send(400, {
+				message: getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(blog);
+		}
+	   });
+ };
+
+/**
  * Blog middleware
  */
 exports.blogByID = function(req, res, next, id) {
 	Blog.findById(id).populate('user', 'username').exec(function(err, blog) {
 		if (err) return next(err);
 		if (!blog) return next(new Error('Failed to load blog ' + id));
-		req.blog = blog;
-		next();
+        Comment.find({'blogId':blog._id}).exec(function(err, comment) {
+             req.blog = blog;
+             req.comment = comment;
+		     next();
+        });
+		
 	});
 };
 
