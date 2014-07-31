@@ -18,11 +18,17 @@ module.exports = function(app) {
 		.put(users.requiresLogin, blogs.hasAuthorization, blogs.update)
 		.delete(users.requiresLogin, blogs.hasAuthorization, blogs.delete);
 
-	app.route('/comments')
+	app.route('/blogs/:blogId/comments')
 	    .post(users.requiresLogin, comms.addComment);
 
-	app.route('/comments/:commId')
+	app.route('/blogs/:blogId/comments/:commId')
 	    .delete(users.requiresLogin, comms.hasAuthorization, comms.deleteComment);
+
+	app.route('/blogs/:blogId/like')
+	    .post(users.requiresLogin, blogs.likePost);
+
+	app.route('/blogs/:blogId/unlike')
+	    .delete(users.requiresLogin, blogs.unlikePost);
 
 
 	// Finish by binding the blog middleware

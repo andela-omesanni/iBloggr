@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Comment = mongoose.model('Comment'),
+	BLog = mongoose.model('Blog'),
 	_ = require('lodash');
 var blogs = require('../../app/controllers/blogs');
 
@@ -12,18 +12,23 @@ var blogs = require('../../app/controllers/blogs');
  * Add a comment
  */
 exports.addComment = function(req, res) {
-       var comment = new Comment(req.body);
-	   comment.commentOwner = req.user;
 
-	   comment.save(function(err) {
+
+	var blog = req.blog;
+	var comment = req.body;
+	comment.commOwner = req.user;
+	blog.comments.push(comment);
+
+	blog.save(function(err) {
 		if (err) {
 			return res.send(400, {
 				message: blogs.getErrorMessage(err)
 			});
-		} else {
-			res.jsonp(comment);
+		} 	
+		else {
+			res.jsonp(blog.comments);
 		}
-	   });
+	});
 };
 
  
@@ -31,37 +36,36 @@ exports.addComment = function(req, res) {
  * Delete a comment
  */
 exports.deleteComment = function(req, res) {
-    var comment = req.comment;
+    var blog = req.blog;
 
-	comment.remove(function(err) {
-		if (err) {
-			return res.send(400, {
-				message: blogs.getErrorMessage(err)
-			});
-		} else {
-               res.jsonp(comment);
-		}
-	});
+    blog.comments.id(req.params.commId).remove();
+    blog.save(function(err){
+    	if(err) {
+    		return res.send(400, {
+    			message: 'comment delete failed'
+    		});
+    	}
+    	else{
+    		res.jsonp(blog.comments);
+    	}
+
+    });
+
 };
 
 /**
  * Comment middleware
  */
 exports.commByID = function(req, res, next, id) {
-	Comment.findById(id).exec(function(err, comm) {
-		if (err) return next(err);
-		if (!comm) return next(new Error('Failed to load blog ' + id));
-        req.comment = comm;
-		next();
-		
-	});
+	req.comment = req.blog.comments.id(id);
+	next();
 };
 
 /**
  * comment authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.comment.commOwner !== req.user.id) {
+	if (req.comment.commOwner.toString() !== req.user.id) {
 		return res.send(403, {
 			message: 'User is not authorized'
 		});

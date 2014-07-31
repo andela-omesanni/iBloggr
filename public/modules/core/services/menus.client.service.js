@@ -10,11 +10,11 @@ angular.module('core').service('Menus', [
 		this.menus = {};
 
 		// A private function for rendering decision 
-		var shouldRender = function(user) {
+		var shouldRender = function(user) { 
 			if (user) {
 				for (var userRoleIndex in user.roles) {
-					for (var roleIndex in this.roles) {
-						if (this.roles[roleIndex] === user.roles[userRoleIndex]) {
+					for (var roleIndex in this.roles) { 
+						if (this.roles[roleIndex] === user.roles[userRoleIndex]) { //alert(this.roles[roleIndex] + "==" + user.roles[userRoleIndex]);
 							return true;
 						}
 					}
@@ -28,8 +28,8 @@ angular.module('core').service('Menus', [
 
 		// Validate menu existance
 		this.validateMenuExistance = function(menuId) {
-			if (menuId && menuId.length) {
-				if (this.menus[menuId]) {
+			if (menuId && menuId.length) { 
+				if (this.menus[menuId]) {//alert("yea");
 					return true;
 				} else {
 					throw new Error('Menu does not exists');
@@ -58,7 +58,7 @@ angular.module('core').service('Menus', [
 				roles: roles || this.defaultRoles,
 				items: [],
 				shouldRender: shouldRender
-			};
+			}; 
 
 			// Return the menu object
 			return this.menus[menuId];
@@ -76,7 +76,7 @@ angular.module('core').service('Menus', [
 		// Add menu item object
 		this.addMenuItem = function(menuId, menuItemTitle, menuItemURL, menuItemType, menuItemUIRoute, isPublic, roles) {
 			// Validate that the menu exists
-			this.validateMenuExistance(menuId);
+			this.validateMenuExistance(menuId); 
 
 			// Push new menu item
 			this.menus[menuId].items.push({
@@ -89,8 +89,8 @@ angular.module('core').service('Menus', [
 				roles: roles || this.defaultRoles,
 				items: [],
 				shouldRender: shouldRender
-			});
-
+			}); 
+            console.log("yea");
 			// Return the menu object
 			return this.menus[menuId];
 		};

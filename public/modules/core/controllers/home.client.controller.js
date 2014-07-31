@@ -2,7 +2,7 @@
 
 
 angular.module('core').controller('HomeController', ['$scope', 'Authentication', 'Blogs',
-	function($scope, Authentication, blogs) {
+	function($scope, Authentication, Blogs) {
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 		$scope.find = function() {

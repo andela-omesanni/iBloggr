@@ -5,7 +5,6 @@
  */
 var mongoose = require('mongoose'),
 	Blog = mongoose.model('Blog'),
-	Comment = mongoose.model('Comment'),
 	_ = require('lodash');
 
 /**
@@ -88,11 +87,11 @@ exports.delete = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			Comment.find({blogId: blog._id}).exec(function(err, comment) {
-                 comment.remove();
+			//Comment.find({blogId: blog._id}).exec(function(err, comment) {
+                 //comment.remove();
                  res.jsonp(blog);
-                 res.jsonp(comment);
-			});
+                // res.jsonp(comment);
+			//});
 			
 		}
 	});
@@ -119,19 +118,63 @@ exports.list = function(req, res, next) {
  * Like a Post
  */
  exports.likePost = function(req, res) {
-    var likes = req.blog.likes;
-        likes.score = 1;
-        likes.user = req.user;
+    var blog = req.blog,
+        like = req.body;
+        like.user = req.user;
+        //blog.likes.push(like);
+    var hasLiked = false;
 
-	likes.save(function(err) {
-		if (err) {
-			return res.send(400, {
-				message: getErrorMessage(err)
+    for(var i = 0; i < blog.likes.length; i++) {
+       if (req.user.id === blog.likes[i].user.toString()) {
+       	   hasLiked = true;
+       	   break;
+        }
+    }
+    if (!hasLiked) {
+    	blog.likes.push(like);
+
+        blog.save(function(err) {
+		   if (err) {
+			   return res.send(400, {
+			      message: getErrorMessage(err)
+			   });
+			} else {
+	            res.jsonp(blog.likes);
+			}
+	    });
+    } 
+    else {
+        return res.send(400, {
+    	   message: 'you have already liked this post before'
+    	});
+    }
+
+ };
+
+ /**
+ * Unlike a Post
+ */
+ exports.unlikePost = function(req, res) {
+    var blog = req.blog;
+
+    for(var i = 0; i < blog.likes.length; i++){
+    	if(req.user.id === blog.likes[i].user.toString()){
+    		blog.likes.id(blog.likes[i]._id).remove();
+    		blog.save(function(err) {
+				if (err) {
+					return res.send(400, {
+						message: getErrorMessage(err)
+					});
+				} else {
+		            return res.jsonp(blog.likes);
+				}
 			});
-		} else {
-               res.jsonp(likes);
-		}
-	});
+        }
+    }
+
+    return res.send(400, {
+    	message: "user has no likes yet"
+    });
 };
 
 /**
@@ -141,12 +184,8 @@ exports.blogByID = function(req, res, next, id) {
 	Blog.findById(id).populate('user', 'username').exec(function(err, blog) {
 		if (err) return next(err);
 		if (!blog) return next(new Error('Failed to load blog ' + id));
-        Comment.find({blogId: blog._id}).exec(function(err, comment) {
-             req.blog = blog;
-             req.blog.comment = comment;
-		     next();
-        });
-		
+        req.blog = blog;
+        next();
 	});
 };
 
@@ -161,3 +200,4 @@ exports.hasAuthorization = function(req, res, next) {
 	}
 	next();
 };
+

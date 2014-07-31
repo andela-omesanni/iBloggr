@@ -6,6 +6,39 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
+
+/*Comment schema*/
+var CommentSchema = new Schema({
+	commOwner: {
+	    type: Schema.ObjectId,
+	    ref: 'User'
+    },
+	commbody: {
+		type: String,
+	    default: '',
+	    trim: true
+	},
+	updated: {
+		type: Date,
+	    default: Date.now
+	}
+});
+
+/**
+ * Likes Schema
+ */
+var LikeSchema = new Schema({
+	score : {
+		type: Number,
+	    default: 0
+	},
+	user: {
+		type: Schema.ObjectId,
+	    ref: 'User'
+	}
+});
+
+
 /**
  * Blog Schema
  */
@@ -29,33 +62,8 @@ var BlogSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	/*comments: [{
-		commOwner: {
-		    type: Schema.ObjectId,
-		    ref: 'User'
-	    },
-		commbody: {
-			type: String,
-		    default: '',
-		    trim: true
-		},
-		updated: {
-			type: Date,
-		     default: Date.now
-		}
-
-	}],*/
-	likes: [{
-		score : {
-			type: Number,
-		    default: 0
-		},
-		user: {
-			type: Schema.ObjectId,
-		    ref: 'User'
-		}
-
-	}]
+	comments: [CommentSchema],
+	likes: [LikeSchema]
 
 });
 
