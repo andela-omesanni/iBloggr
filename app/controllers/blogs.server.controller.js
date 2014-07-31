@@ -55,7 +55,6 @@ exports.create = function(req, res) {
  */
 exports.read = function(req, res) {
 	res.jsonp(req.blog);
-	res.jsonp(req.comment);
 };
 
 /**
@@ -116,55 +115,21 @@ exports.list = function(req, res, next) {
 	});
 };
 
-/**
- * Add a comment
- */
- exports.addComment = function(req, res) {
-       var comment = new Comment(req.body);
-	   comment.commentOwner = req.user;
-	   comment.blogId = req.blogId;
-
-	   comment.save(function(err) {
-		if (err) {
-			return res.send(400, {
-				message: getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(comment);
-		}
-	   });
- };
-
- /**
- * Delete a comment
- */
- exports.deleteComment = function(req, res) {
-    var comment = req.comment;
-
-	comment.remove(function(err) {
-		if (err) {
-			return res.send(400, {
-				message: getErrorMessage(err)
-			});
-		} else {
-               res.jsonp(comment);
-		}
-	});
-};
-
  /**
  * Like a Post
  */
  exports.likePost = function(req, res) {
-    var like = req.blog;
+    var likes = req.blog.likes;
+        likes.score = 1;
+        likes.user = req.user;
 
-	comment.remove(function(err) {
+	likes.save(function(err) {
 		if (err) {
 			return res.send(400, {
 				message: getErrorMessage(err)
 			});
 		} else {
-               res.jsonp(comment);
+               res.jsonp(likes);
 		}
 	});
 };
@@ -178,7 +143,7 @@ exports.blogByID = function(req, res, next, id) {
 		if (!blog) return next(new Error('Failed to load blog ' + id));
         Comment.find({blogId: blog._id}).exec(function(err, comment) {
              req.blog = blog;
-             req.comment = comment;
+             req.blog.comment = comment;
 		     next();
         });
 		

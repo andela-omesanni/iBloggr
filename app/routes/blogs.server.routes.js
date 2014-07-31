@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 var users = require('../../app/controllers/users'),
-	blogs = require('../../app/controllers/blogs');
+	blogs = require('../../app/controllers/blogs'),
+	comms = require('../../app/controllers/comments');
 
 module.exports = function(app) {
 	// Article Routes
@@ -18,12 +19,15 @@ module.exports = function(app) {
 		.delete(users.requiresLogin, blogs.hasAuthorization, blogs.delete);
 
 	app.route('/comments')
-	    .post(users.requiresLogin, blogs.addComment);
+	    .post(users.requiresLogin, comms.addComment);
 
 	app.route('/comments/:commId')
-	    .delete(users.requiresLogin, blogs.hasAuthorization, blogs.deleteComment);
+	    .delete(users.requiresLogin, comms.hasAuthorization, comms.deleteComment);
 
 
-	// Finish by binding the article middleware
+	// Finish by binding the blog middleware
 	app.param('blogId', blogs.blogByID);
+
+	// Finish by binding the comment middleware
+	app.param('commId', comms.commByID);
 };
