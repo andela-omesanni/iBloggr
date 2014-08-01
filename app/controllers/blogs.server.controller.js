@@ -87,12 +87,7 @@ exports.delete = function(req, res) {
 				message: getErrorMessage(err)
 			});
 		} else {
-			//Comment.find({blogId: blog._id}).exec(function(err, comment) {
-                 //comment.remove();
-                 res.jsonp(blog);
-                // res.jsonp(comment);
-			//});
-			
+            res.jsonp(blog);
 		}
 	});
 };

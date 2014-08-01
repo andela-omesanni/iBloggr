@@ -1,0 +1,58 @@
+<section data-ng-controller="BlogsController" data-ng-init="findOne()"
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<article>
+						<h1 data-ng-bind="blog.title"></h1>
+						<div class="pull-right" data-ng-show="authentication.user._id == blog.user._id">
+							<a class="btn btn-primary" href="/#!/blogs/{{blog._id}}/edit">
+								<i class="glyphicon glyphicon-edit"></i>
+							</a>
+							<a class="btn btn-primary" data-ng-click="remove();">
+								<i class="glyphicon glyphicon-trash"></i>
+							</a>
+						</div>
+
+				        <div class="row">
+				          	
+				          	<div class="col-sm-12 col-md-12 text-muted">
+				          		<span class="glyphicon glyphicon-user"></span> <span  data-ng-bind="blog.user.username"></span>
+				          		&nbsp;&nbsp
+				          		<span class="glyphicon glyphicon-hand-up"></span> <span data-ng-bind="blog.likes.length"></span> Likes
+				          		&nbsp;&nbsp;
+				          		<span class="glyphicon glyphicon-pencil"></span> <span data-ng-bind="blog.comments.length"></span> Comments		          		
+				          		&nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> &nbsp;<span data-ng-bind="blog.created | date:'mediumDate'"></span>	          		
+				          	</div>
+				          </div>
+
+				          <hr>
+
+				          <br />
+				          <p class="lead" data-ng-bind="blog.content"></p>
+					</article>
+
+					<!-- Comment form -->
+					<div class="well">
+						<h4>Leave a comment</h4>
+						<form class="clearfix" data-ng-submit="createComment()" novalidate>
+						   <div data-ng-show="error" class="text-danger">
+					          <strong data-ng-bind="error"></strong>
+				          </div>
+						  <div class="col-md-12 form-group">
+						    <label class="sr-only" for="email">Comment</label>
+						    <textarea data-ng-model="commbody" class="form-control" id="comment" placeholder="Comment"></textarea>
+						  </div>
+						  <div class="col-md-12 form-group text-left">
+						  	<button type="submit" class="btn btn-primary">Submit</button>
+						  </div>
+						</form>					
+					</div>
+                    <h3 class="example-commentheading"></h3> Comments
+					
+				</div>
+			</div>
+		</div>
+
+
+</section>

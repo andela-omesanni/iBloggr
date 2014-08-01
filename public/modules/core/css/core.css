@@ -7,3 +7,95 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 	display: none !important;
 }
+.body { background: url('/img/bg.gif'); }
+
+.post
+{
+    background-color: #FFF;
+    overflow: hidden;
+    box-shadow: 0 0 1px #CCC;
+}
+.post img
+{
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+}
+.post .post-body
+{
+    padding: 15px;
+}
+.post .author
+{
+    font-size: 11px;
+    color: #737373;
+    font-family: helvetica;
+    padding: 25px 30px 20px;
+    padding-left: 0;
+}
+.post .post-img-content
+{
+    height: 100px;
+    background-color: orange;
+    position: relative;
+}
+.post .post-img-content img
+{
+    position: absolute;
+}
+.post .post-img-content h2
+{
+   text-align: center;
+   color: white;
+   padding-top: 20px;
+   margin: 0;
+   font-size: 36px;
+}
+
+b.likes {
+	margin-left: 20px;
+}
+
+div.well h4 {
+  margin-left: 15px;
+}
+.row {
+  border-radius: 10px;
+  /*background-color: orange;*/
+  margin-top: 5%;
+}
+.example-commentheading {
+  position:relative;
+  padding:0;
+  color:#b513af;
+}
+
+/* creates the rectangle */
+.example-commentheading:before {
+  content:"";
+  position:absolute;
+  top:9px;
+  left:-25px;
+  width:15px;
+  height:10px;
+  background:#b513af;
+  /* css3 */
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;
+  border-radius:3px;
+}
+
+/* creates the triangle */
+.example-commentheading:after {
+  content:"";
+  position:absolute;
+  top:15px;
+  left:-19px;
+  border:4px solid transparent;
+  border-left-color:#b513af;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}

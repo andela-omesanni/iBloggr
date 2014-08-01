@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Blogs', 'Comments',
-	function($scope, $stateParams, $location, Authentication, blogs, comments) {
+	function($scope, $stateParams, $location, Authentication, Blogs, Comments) {
 		$scope.authentication = Authentication;
 
 		$scope.create = function() {
@@ -18,6 +18,21 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 			this.title = '';
 			this.content = '';
 		};
+
+        $scope.createComment = function() {
+
+			var comment = new Comments({
+				blogId: $scope.blog._id,
+				commbody: $scope.commbody
+			});
+			$scope.blog.comments.push(comment);
+			comment.$save(function(response) {
+				$location.path('blogs/' + response._id);
+			}, function(errorResponse) {
+				$scope.error = errorResponse.data.message;
+			});
+			$scope.commbody = '';
+	   };
 
 		$scope.remove = function(blog) {
 			if (blog) {
@@ -53,21 +68,6 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 			$scope.blog = Blogs.get({
 				blogId: $stateParams.blogId
 			});
-		};
-
-		$scope.createComment = function() {
-           var comment = new Comments({
-           	    blogId: $scope.blog._id,
-				commbody: $scope.commbody
-			});
-			comment.$save(function(response) {
-				$location.path('blogs/' + response._id);
-			}, function(errorResponse) {
-				$scope.error = errorResponse.data.message;
-			});
-
-			$scope.blogId = '';
-			$scope.commbody = '';
 		};
 
 		$scope.deleteComment = function(comment) {

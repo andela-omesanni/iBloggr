@@ -1,3 +1,33 @@
 <section data-ng-controller="HomeController" data-ng-init="find()">
 	{{blogs}}
+
+	<div class="container">
+    <div class="row">
+        <div class="col-sm-4 col-md-4" data-ng-repeat="blog in blogs">
+            <div class="post">
+            	<div class="post-img-content">
+                    
+                   <h2 data-ng-bind="blog.title"></h2>
+                     
+                </div>
+               
+                <div class="post-body">
+                    <div class="author">
+                        By <b data-ng-bind="blog.user.username"></b> |
+                        <time data-ng-bind="blog.created | date:'mediumDate'"></time> 
+                        <b class="likes" data-ng-bind="blog.comments.length"> </b> comments
+                        <b class="likes" data-ng-bind="blog.likes.length"> </b> likes
+                    </div>
+                    <div data-ng-bind="blog.content">
+                    </div>
+                    <div>
+                        <a  data-ng-href="#!/blogs/{{blog._id}}" class="btn btn-warning btn-sm">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+   </div>
+
 </section>

@@ -13,7 +13,7 @@ var blogs = require('../../app/controllers/blogs');
  */
 exports.addComment = function(req, res) {
 
-
+	console.log("add comments");
 	var blog = req.blog;
 	var comment = req.body;
 	comment.commOwner = req.user;
@@ -26,7 +26,7 @@ exports.addComment = function(req, res) {
 			});
 		} 	
 		else {
-			res.jsonp(blog.comments);
+			res.jsonp(blog);
 		}
 	});
 };
