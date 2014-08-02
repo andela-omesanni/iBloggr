@@ -1,5 +1,4 @@
 <section data-ng-controller="HomeController" data-ng-init="find()">
-	{{blogs}}
 
 	<div class="container">
     <div class="row">
@@ -18,7 +17,8 @@
                         <b class="likes" data-ng-bind="blog.comments.length"> </b> comments
                         <b class="likes" data-ng-bind="blog.likes.length"> </b> likes
                     </div>
-                    <div data-ng-bind="blog.content">
+                    <div data-ng-bind="blog.content | limitTo:200">
+                        ...
                     </div>
                     <div>
                         <a  data-ng-href="#!/blogs/{{blog._id}}" class="btn btn-warning btn-sm">Read more</a>

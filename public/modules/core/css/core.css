@@ -14,6 +14,7 @@
     background-color: #FFF;
     overflow: hidden;
     box-shadow: 0 0 1px #CCC;
+    font-family: 'Roboto' !important;
 }
 .post img
 {
@@ -37,7 +38,7 @@
 }
 .post .post-img-content
 {
-    height: 100px;
+    height: 70px;
     background-color: orange;
     position: relative;
 }
@@ -49,9 +50,11 @@
 {
    text-align: center;
    color: white;
-   padding-top: 20px;
+   padding: 20px;
+   /*font-family: 'Roboto' !important;*/
+   font-style: normal;
    margin: 0;
-   font-size: 36px;
+   font-size: 20px;
 }
 
 b.likes {
@@ -66,14 +69,116 @@ div.well h4 {
   /*background-color: orange;*/
   margin-top: 5%;
 }
-.example-commentheading {
+.lead {
+   font-family: 'Roboto' !important;
+   font-size: 12px;
+   line-height: 25px;
+}
+.number {
   position:relative;
   padding:0;
-  color:#b513af;
+  color: white;
+  left: 30px;
+  top: -9px;
 }
 
 /* creates the rectangle */
-.example-commentheading:before {
+.number:before {
+  content:"";
+  position:absolute;
+  top:9px;
+  left:-25px;
+  width:50px;
+  height:50px;
+  background:#C91F2C;
+  /* css3 */
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;
+  border-radius:3px;
+}
+
+/* creates the triangle */
+.number:after {
+  content:"";
+  position:absolute;
+  top:9px;
+  left:-8px;
+  border:4px solid transparent;
+  border-left-color:#C91F2C;
+  height: 30px;
+  border-width: 33px;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+.number span {
+  position: absolute; 
+  margin-top: 20px;
+  margin-left: -10px;
+  z-index: 10;
+}
+
+
+.commentContainer {
+  width: 500px;
+  margin-bottom: 30px; 
+}
+
+.commentBox {
+  position:relative;
+  width: 70%;
+  height: 100%;
+  left: 15%;
+  margin:0;
+  color:#fff;
+  padding: 20px;
+  background:#5a8f00; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#b8db29), to(#5a8f00));
+  background:-moz-linear-gradient(#b8db29, #5a8f00);
+  background:-o-linear-gradient(#b8db29, #5a8f00);
+  background:linear-gradient(#b8db29, #5a8f00);
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+
+/* display of quote author (alternatively use a class on the element following the blockquote) */
+.commOwner {
+    margin:30px 0 2em 85px; 
+    font-style:italic;
+    font-size: 12px;
+}
+
+/* creates the triangle */
+.commentBox:after {
+  content:"";
+  position:absolute;
+  bottom:-40px;
+  left:50px;
+  border-width:0 20px 40px 0px;
+  border-style:solid;
+  border-color:transparent #5a8f00;
+  /* reduce the damage in FF3.0 */
+  display:block;
+  width:0;
+}
+
+.delete {
+   float: right;
+   width: 50px;
+   margin-top: -60px;
+}
+
+.commentheading {
+  position:relative;
+  padding:0;
+  color:#b513af;
+  margin-left: 29px;
+}
+
+/* creates the rectangle */
+.commentheading:before {
   content:"";
   position:absolute;
   top:9px;
@@ -88,7 +193,7 @@ div.well h4 {
 }
 
 /* creates the triangle */
-.example-commentheading:after {
+.commentheading:after {
   content:"";
   position:absolute;
   top:15px;

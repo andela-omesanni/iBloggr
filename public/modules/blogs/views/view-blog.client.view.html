@@ -27,30 +27,49 @@
 				          </div>
 
 				          <hr>
-
-				          <br />
 				          <p class="lead" data-ng-bind="blog.content"></p>
+
+				          <span data-ng-show="blog.likes | filter: authentication.user._id">You liked this Blog</span>
 					</article>
 
 					<!-- Comment form -->
 					<div class="well">
 						<h4>Leave a comment</h4>
-						<form class="clearfix" data-ng-submit="createComment()" novalidate>
+						<form class="clearfix" data-ng-submit="createComment()" >
 						   <div data-ng-show="error" class="text-danger">
 					          <strong data-ng-bind="error"></strong>
 				          </div>
 						  <div class="col-md-12 form-group">
-						    <label class="sr-only" for="email">Comment</label>
-						    <textarea data-ng-model="commbody" class="form-control" id="comment" placeholder="Comment"></textarea>
+						  	<p ng-show="form.commbody.$error.invalid" class="text-danger">Comment cannot be blank.</p>
+						    <label class="sr-only" for="commbody">Comment</label>
+						    <textarea data-ng-model="commbody" class="form-control" id="commbody" placeholder="Comment" check-length required></textarea>
 						  </div>
 						  <div class="col-md-12 form-group text-left">
 						  	<button type="submit" class="btn btn-primary">Submit</button>
 						  </div>
 						</form>					
 					</div>
-                    <h3 class="example-commentheading"></h3> Comments
-					
-				</div>
+                    <h3 class="commentheading">{{blog.comments.length}} Comments</h3>
+                    
+                    <div class="commentContainer" data-ng-repeat="comment in blog.comments">
+
+	                    <diV class="number"><span>{{$index + 1}}</span></div>
+	                     <div class="commentBox">{{comment.commOwner}}
+	                     	<span data-ng-bind="comment.commbody"></span>
+	                     </div>
+	                     <div class="delete" data-ng-show="comment.commOwner===authentication.user._id">
+
+	                        <a class="btn btn-primary" data-ng-click="deleteComment(comment);">
+									<i class="glyphicon glyphicon-trash"></i>
+							</a>
+						  </div>
+						 <div class="commOwner text-muted"
+	                       <span> Posted by </span> <span data-ng-bind="comment.commOwner"></span> on <span data-ng-bind="comment.updated | date:'mediumDate'"></span>
+	                     </div>
+	                       
+	                  </div>
+
+				    </div>
 			</div>
 		</div>
 

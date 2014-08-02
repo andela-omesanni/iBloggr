@@ -16,7 +16,8 @@ var CommentSchema = new Schema({
 	commbody: {
 		type: String,
 	    default: '',
-	    trim: true
+	    trim: true,
+	    //required: 'Comment cannot be blank'
 	},
 	updated: {
 		type: Date,
@@ -57,6 +58,7 @@ var BlogSchema = new Schema({
 		type: String,
 		default: '',
 		trim: true
+		//required: 'Content cannot be blank'
 	},
 	user: {
 		type: Schema.ObjectId,

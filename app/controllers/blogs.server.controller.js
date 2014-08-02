@@ -176,7 +176,7 @@ exports.list = function(req, res, next) {
  * Blog middleware
  */
 exports.blogByID = function(req, res, next, id) {
-	Blog.findById(id).populate('user', 'username').exec(function(err, blog) {
+	Blog.findById(id).populate('user', 'username').populate('comments.commOwner','username').exec(function(err, blog) {
 		if (err) return next(err);
 		if (!blog) return next(new Error('Failed to load blog ' + id));
         req.blog = blog;
@@ -190,7 +190,7 @@ exports.blogByID = function(req, res, next, id) {
 exports.hasAuthorization = function(req, res, next) {
 	if (req.blog.user.id !== req.user.id) {
 		return res.send(403, {
-			message: 'User is not authorized'
+			commMessage: 'User is not authorized'
 		});
 	}
 	next();

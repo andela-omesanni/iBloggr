@@ -68,16 +68,48 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 			$scope.blog = Blogs.get({
 				blogId: $stateParams.blogId
 			});
+			console.log($scope.blog);
 		};
 
-		$scope.deleteComment = function(comment) {
-           comment.remove();
-
-           for (var i in $scope.comments) {
-				if ($scope.comments[i] === comment) {
-					$scope.comments.splice(i, 1);
+		$scope.deleteComment = function(comment) { console.log(comment);
+		   var comm = new Comments({
+		   	     blogId: $scope.blog._id,
+		   	    _id: comment._id,
+		   	    commOwner: comment.commOwner
+		   });
+           comm.$remove(function(response) { console.log(response);
+           	  for (var i in $scope.blog.comments) {
+				if ($scope.blog.comments[i] === comment) {
+					$scope.blog.comments.splice(i, 1);
+					console.log($scope.blog.comments);
 				}
-		    }
+		      }
+			}, function(errorResponse) {
+				$scope.commError = errorResponse.data.commMessage;
+				alert($scope.commError);
+			});
 		};
 	}
 ]);
+
+
+
+angular.module('blogs').directive('checkLength', function() {
+    var usernameRegexp = /^[^.$\[\]#\/\s]+$/;
+
+    return {
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ctrl) {
+                ctrl.$parsers.unshift(function(viewValue) {
+                 if (viewValue.length === 0) {
+                        ctrl.$setValidity('invalid', false);
+     
+                        return undefined;
+                 } else {
+                       ctrl.$setValidity('invalid', true);
+                       return viewValue;
+                 }
+               });
+        }
+    };
+});

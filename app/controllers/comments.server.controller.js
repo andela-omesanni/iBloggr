@@ -12,8 +12,6 @@ var blogs = require('../../app/controllers/blogs');
  * Add a comment
  */
 exports.addComment = function(req, res) {
-
-	console.log("add comments");
 	var blog = req.blog;
 	var comment = req.body;
 	comment.commOwner = req.user;
@@ -46,7 +44,7 @@ exports.deleteComment = function(req, res) {
     		});
     	}
     	else{
-    		res.jsonp(blog.comments);
+    		res.jsonp(blog);
     	}
 
     });
@@ -67,7 +65,7 @@ exports.commByID = function(req, res, next, id) {
 exports.hasAuthorization = function(req, res, next) {
 	if (req.comment.commOwner.toString() !== req.user.id) {
 		return res.send(403, {
-			message: 'User is not authorized'
+			commMessage: 'User is not authorized'
 		});
 	}
 	next();
