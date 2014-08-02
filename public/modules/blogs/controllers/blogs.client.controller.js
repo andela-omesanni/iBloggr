@@ -3,6 +3,7 @@
 angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Blogs', 'Comments',
 	function($scope, $stateParams, $location, Authentication, Blogs, Comments) {
 		$scope.authentication = Authentication;
+		$scope.liked = false;
 
 		$scope.create = function() {
 			var blog = new Blogs({
@@ -89,6 +90,16 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 				alert($scope.commError);
 			});
 		};
+
+		$scope.checkLikes = function(likes) {
+			for (var i in likes) {
+				if (likes[i].user === $scope.authentication.user._id) {
+					$scope.liked = true;
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 ]);
 

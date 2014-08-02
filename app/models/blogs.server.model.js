@@ -29,10 +29,6 @@ var CommentSchema = new Schema({
  * Likes Schema
  */
 var LikeSchema = new Schema({
-	score : {
-		type: Number,
-	    default: 0
-	},
 	user: {
 		type: Schema.ObjectId,
 	    ref: 'User'

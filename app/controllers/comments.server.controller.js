@@ -63,7 +63,7 @@ exports.commByID = function(req, res, next, id) {
  * comment authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.comment.commOwner.toString() !== req.user.id) {
+	if (req.comment.commOwner._id.toString() !== req.user.id) {
 		return res.send(403, {
 			commMessage: 'User is not authorized'
 		});

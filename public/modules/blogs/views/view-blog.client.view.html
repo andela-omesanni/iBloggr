@@ -29,7 +29,7 @@
 				          <hr>
 				          <p class="lead" data-ng-bind="blog.content"></p>
 
-				          <span data-ng-show="blog.likes | filter: authentication.user._id">You liked this Blog</span>
+				          <span data-ng-show="checkLikes(blog.likes)">You liked this Blog</span> 
 					</article>
 
 					<!-- Comment form -->
@@ -54,17 +54,17 @@
                     <div class="commentContainer" data-ng-repeat="comment in blog.comments">
 
 	                    <diV class="number"><span>{{$index + 1}}</span></div>
-	                     <div class="commentBox">{{comment.commOwner}}
+	                     <div class="commentBox">
 	                     	<span data-ng-bind="comment.commbody"></span>
 	                     </div>
-	                     <div class="delete" data-ng-show="comment.commOwner===authentication.user._id">
+	                     <div class="delete" data-ng-show="comment.commOwner._id===authentication.user._id">
 
 	                        <a class="btn btn-primary" data-ng-click="deleteComment(comment);">
 									<i class="glyphicon glyphicon-trash"></i>
 							</a>
 						  </div>
 						 <div class="commOwner text-muted"
-	                       <span> Posted by </span> <span data-ng-bind="comment.commOwner"></span> on <span data-ng-bind="comment.updated | date:'mediumDate'"></span>
+	                       <span> Posted by </span> <span data-ng-bind="comment.commOwner.username"></span> on <span data-ng-bind="comment.updated | date:'mediumDate'"></span>
 	                     </div>
 	                       
 	                  </div>
