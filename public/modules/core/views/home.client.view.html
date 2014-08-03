@@ -6,7 +6,7 @@
             <div class="post">
             	<div class="post-blog-title">
                     
-                   <h2 data-ng-bind="blog.title"></h2>
+                   <h2 data-ng-bind="blog.title  | limitTo:31"></h2>
                      
                 </div>
                
@@ -19,7 +19,7 @@
                     </div>
                     <div>
                         <span data-ng-bind="blog.content | limitTo:200"></span>
-                        ...
+                        <span data-ng-show="blog.content.length > 200">...</span>
                     </div>
                     <div style="margin-top: 4%;">
                         <a  data-ng-href="#!/blogs/{{blog._id}}" class="btn btn-warning btn-sm">Read more</a>

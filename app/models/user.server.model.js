@@ -34,13 +34,12 @@ var UserSchema = new Schema({
 	},
 	username: {
 		type: String,
-		unique: true,
-		validate: [validateLocalStrategyProperty, 'Please fill in your username'],
-		trim: true
+		unique: true
 	},
 	password: {
 		type: String,
 		default: '',
+		unique: true,
 		validate: [validateLocalStrategyPassword, 'Password should be longer']
 	},
 	gravatar: {
@@ -75,6 +74,7 @@ var UserSchema = new Schema({
  * Hook a pre save method to hash the password
  */
 UserSchema.pre('save', function(next) {
+
 	if (this.password && this.password.length > 6) {
 		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
 		this.password = this.hashPassword(this.password);

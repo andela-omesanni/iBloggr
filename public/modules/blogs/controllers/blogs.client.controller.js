@@ -96,7 +96,7 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 		  
 			for (var i in likes) {
 				if (likes[i].user === $scope.authentication.user._id) {
-					
+					$scope.liked = true;
 					return true;
 				}
 			} 
@@ -114,7 +114,7 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
             	console.log(response);
 
 				$scope.blog = response;
-				//$scope.liked = true;
+				$scope.liked = true;
 			}, function(errorResponse) {
 				$scope.likeError = errorResponse.data.message;
 				alert($scope.likeError);
@@ -130,7 +130,7 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
             unlike.$destroy(function(response) {
             	console.log(response);
 				$scope.blog = response;
-				//$scope.liked = false;
+				$scope.liked = false;
 			}, function(errorResponse) {
 				$scope.likeError = errorResponse.data.message;
 				alert($scope.likeError);

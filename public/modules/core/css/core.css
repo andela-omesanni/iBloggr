@@ -21,7 +21,7 @@ article  {
   font-family:'Roboto', "Myriad Pro",Arial,Helvetica,sans-serif;
 }
 
-#blog-title { float: left; width: 80%; padding: 0;}
+#blog-title { float: left; width: 80%; padding: 0; word-wrap: break-word;}
 #blog-title h1 { padding: 0 0 20px 0; margin: 0;}
 .pull-right.buttons { width: 20%; margin: 8px 0px 0 0px;}
 
@@ -63,24 +63,17 @@ article  {
     height: 70px;
     background-color: #3172AA;
     position: relative;
-    overflow: hidden;
 }
-.post .post-blog-title img
-{
-    position: absolute;
-}
+
 .post .post-blog-title h2
 {
    text-align: center;
    color: white;
    padding: 20px;
-   /*font-family: 'Roboto' !important;*/
    font-style: normal;
    margin: 0;
    font-size: 20px;
 }
-
-pre.lead { font-family: initial; }
 
 .postbox {
   margin-bottom: 2%;
@@ -98,17 +91,24 @@ div.well h4 {
   /*background-color: orange;*/
   margin-top: 5%;
 }
-.lead {
+pre.lead {
    /*font-family: 'Roboto' !important;*/
    font-size: 14px;
-   line-height: 25px;
+   line-height: 25px; 
+   font-family: 'Roboto', "Myriad Pro",Arial,Helvetica, sans-serif !important;
+   white-space: pre-wrap;
 }
 .number {
-  position:relative;
-  padding:0;
-  color: white;
-  left: 30px;
-  top: -9px;
+  float:left;
+  padding:15px 0;
+  color: black;
+  background: #C91F2C;
+  border-radius: 3px;
+  width: 10%;
+  text-align: center;
+  font-size: 18px;
+  box-shadow:1px 1px 0 black;
+  -webkit-box-shadow:1px 1px 0 black;
 }
 
 .row .text-muted {
@@ -117,7 +117,7 @@ div.well h4 {
 }
 
 /* creates the rectangle */
-.number:before {
+/*.number:before {
   content:"";
   position:absolute;
   top:9px;
@@ -125,13 +125,12 @@ div.well h4 {
   width:50px;
   height:50px;
   background:#C91F2C;
-  /* css3 */
   -webkit-border-radius:3px;
   -moz-border-radius:3px;
   border-radius:3px;
 }
 
-/* creates the triangle */
+ creates the triangle 
 .number:after {
   content:"";
   position:absolute;
@@ -141,32 +140,32 @@ div.well h4 {
   border-left-color:#C91F2C;
   height: 30px;
   border-width: 33px;
-  /* reduce the damage in FF3.0 */
   display:block;
   width:0;
-}
-.number span {
+}*/
+/*.number span {
   position: absolute; 
   margin-top: 20px;
   margin-left: -10px;
   z-index: 10;
-}
+}*/
 
 
 .commentContainer {
-  width: 500px;
+  width: 550px;
   margin-bottom: 30px; 
+  border: 1px solid black;
 }
 
 .commentBox {
   position:relative;
-  width: 80%;
+  width: 70%;
   height: 100%;
   left: 15%;
   margin:0;
   color:#fff;
   font-size: 12px;
-  padding: 15px 20px;
+  padding: 15px 40px 15px 0;
   background:#5a8f00; /* default background for browsers without gradient support */
   /* css3 */
   background:-webkit-gradient(linear, 0 0, 0 100%, from(#b8db29), to(#5a8f00));
@@ -176,6 +175,7 @@ div.well h4 {
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
   border-radius:10px;
+  overflow: none; 
 }
 
 .commentBox pre {
@@ -183,10 +183,18 @@ div.well h4 {
    color: white;
    background-color: transparent;
    border-radius: none;
-   border: none;
    font-size: 14px;
-   padding: 0;
+   padding: 0 0px; 
+   border: none;
+   font-family: 'Roboto', "Myriad Pro",Arial,Helvetica, sans-serif !important;
+   white-space: normal;
+
 }
+.commentBox pre img {
+   margin-left: -40px;
+}
+
+.commentBox span { margin-left: -50px; }
 
 /* display of quote author (alternatively use a class on the element following the blockquote) */
 .commOwner {
@@ -210,9 +218,10 @@ div.well h4 {
 }
 
 .delete {
-  position: absolute;
+  position: absolue;
    width: 50px;
-   left: 60%;
+   top: -200px;
+   left: 100%;
 }
 
 .commentheading {
@@ -249,3 +258,59 @@ div.well h4 {
   display:block;
   width:0;
 }
+
+section.row {
+  background: -moz-linear-gradient(bottom, #cccccc 0%, #eeeeee 100%);
+  background: -webkit-linear-gradient(bottom, #cccccc 0%, #eeeeee 100%);
+  margin: 1% auto;
+  width: 100%;
+}
+
+section.row input {
+  box-shadow: inset 2px 2px 5px #ccc, 2px 2px 5px #ccc;
+}
+
+.box {
+  width:80%;
+  background:#FFF;
+  margin:40px auto;
+}
+
+/*==================================================
+ * Effect 5
+ * ===============================================*/
+.effect5
+{
+  position: relative;
+}
+.effect5:before, .effect5:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 25px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 35px 20px #777;
+  -moz-box-shadow: 0 35px 20px #777;
+  box-shadow: 0 35px 20px #777;
+  -webkit-transform: rotate(-8deg);
+  -moz-transform: rotate(-8deg);
+  -o-transform: rotate(-8deg);
+  -ms-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+}
+.effect5:after
+{
+  -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(8deg);
+  -o-transform: rotate(8deg);
+  -ms-transform: rotate(8deg);
+  transform: rotate(8deg);
+  right: 10px;
+  left: auto;
+}
+
