@@ -4,8 +4,10 @@
 			<div class="row">
 				<div class="col-md-8">
 					<article>
-						<h1 data-ng-bind="blog.title"></h1>
-						<div class="pull-right" data-ng-show="authentication.user._id == blog.user._id">
+					   <div id="blog-title">
+						  <h1 data-ng-bind="blog.title"></h1>
+					    </div>
+						<div class="pull-right buttons" data-ng-show="authentication.user._id == blog.user._id">
 							<a class="btn btn-primary" href="/#!/blogs/{{blog._id}}/edit">
 								<i class="glyphicon glyphicon-edit"></i>
 							</a>
@@ -27,7 +29,7 @@
 				          </div>
 
 				          <hr>
-				          <p class="lead" data-ng-bind="blog.content"></p>
+				          <pre class="lead" data-ng-bind="blog.content"></pre>
 
 				          <span data-ng-show="authentication.user._id && checkLikes(blog.likes)"><strong>You liked this Blog</strong></span> 
 				          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && checkLikes(blog.likes)" data-ng-click="unlikePost()">Unlike</button>
@@ -58,7 +60,7 @@
 	                    <diV class="number"><span>{{$index + 1}}</span></div>
 	                     <div class="commentBox clearfix">
 	                     	<img data-ng-src="{{comment.commOwner.gravatar}}" />
-	                     	<span data-ng-bind="comment.commbody"></span>
+	                     	<pre data-ng-bind="comment.commbody"></pre>
 	                     </div><div style="clear:both;"> </div>
 	                     <div class="delete" data-ng-show="comment.commOwner._id===authentication.user._id">
 

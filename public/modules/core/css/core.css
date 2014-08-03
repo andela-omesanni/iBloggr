@@ -21,6 +21,10 @@ article  {
   font-family:'Roboto', "Myriad Pro",Arial,Helvetica,sans-serif;
 }
 
+#blog-title { float: left; width: 80%; padding: 0;}
+#blog-title h1 { padding: 0 0 20px 0; margin: 0;}
+.pull-right.buttons { width: 20%; margin: 8px 0px 0 0px;}
+
 .post
 {
     background-color: #FFF;
@@ -40,6 +44,12 @@ article  {
 {
     padding: 15px;
 }
+
+.post .post-body:hover {
+   background-color: #FFFF66;
+   transition: all  1.2s ease;
+}
+
 .post .author
 {
     font-size: 11px;
@@ -48,17 +58,18 @@ article  {
     padding: 25px 30px 20px;
     padding-left: 0;
 }
-.post .post-img-content
+.post .post-blog-title
 {
     height: 70px;
     background-color: #3172AA;
     position: relative;
+    overflow: hidden;
 }
-.post .post-img-content img
+.post .post-blog-title img
 {
     position: absolute;
 }
-.post .post-img-content h2
+.post .post-blog-title h2
 {
    text-align: center;
    color: white;
@@ -68,6 +79,8 @@ article  {
    margin: 0;
    font-size: 20px;
 }
+
+pre.lead { font-family: initial; }
 
 .postbox {
   margin-bottom: 2%;
@@ -163,6 +176,16 @@ div.well h4 {
   -webkit-border-radius:10px;
   -moz-border-radius:10px;
   border-radius:10px;
+}
+
+.commentBox pre {
+   font-family: initial;
+   color: white;
+   background-color: transparent;
+   border-radius: none;
+   border: none;
+   font-size: 14px;
+   padding: 0;
 }
 
 /* display of quote author (alternatively use a class on the element following the blockquote) */
