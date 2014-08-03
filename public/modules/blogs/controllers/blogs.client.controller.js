@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Blogs', 'Comments',
-	function($scope, $stateParams, $location, Authentication, Blogs, Comments) {
+angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Blogs', 'Comments', 'Likes',
+	function($scope, $stateParams, $location, Authentication, Blogs, Comments, Likes) {
 		$scope.authentication = Authentication;
 		$scope.liked = false;
 
@@ -28,7 +28,8 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 			});
 			$scope.blog.comments.push(comment);
 			comment.$save(function(response) {
-				$location.path('blogs/' + response._id);
+				//$location.path('blogs/' + response._id);
+				$scope.blog = response;
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -92,14 +93,49 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 		};
 
 		$scope.checkLikes = function(likes) {
+		  
 			for (var i in likes) {
 				if (likes[i].user === $scope.authentication.user._id) {
-					$scope.liked = true;
+					
 					return true;
 				}
-			}
-			return false;
-		}
+			} 
+            return false;
+          
+		};
+
+		$scope.likePost = function() {
+            var like = new Likes ({
+                blogId: $scope.blog._id,
+                dest: "like"
+            });
+
+            like.$save(function(response) {
+            	console.log(response);
+
+				$scope.blog = response;
+				//$scope.liked = true;
+			}, function(errorResponse) {
+				$scope.likeError = errorResponse.data.message;
+				alert($scope.likeError);
+			});
+		};
+
+		$scope.unlikePost = function() {
+            var unlike = new Likes ({
+                blogId: $scope.blog._id,
+                dest: "unlike"
+            });
+
+            unlike.$destroy(function(response) {
+            	console.log(response);
+				$scope.blog = response;
+				//$scope.liked = false;
+			}, function(errorResponse) {
+				$scope.likeError = errorResponse.data.message;
+				alert($scope.likeError);
+			});
+		};
 	}
 ]);
 

@@ -1,20 +1,32 @@
 .content {
-	margin-top: 50px;
+  margin-top: 50px;
 }
 .undecorated-link:hover {
-	text-decoration: none;
+  text-decoration: none;
 }
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-	display: none !important;
+  display: none !important;
 }
-.body { background: url('/img/bg.gif'); }
+.body { 
+  background: url('./modules/core/img/bg.gif'); 
+  font-family: 'Roboto', "Myriad Pro",Arial,Helvetica, sans-serif !important;
+  font-size: size: 12px;
+}
+
+.bloglike {
+  margin-bottom: 1%;
+}
+
+article  {
+  font-family:'Roboto', "Myriad Pro",Arial,Helvetica,sans-serif;
+}
 
 .post
 {
     background-color: #FFF;
     overflow: hidden;
-    box-shadow: 0 0 1px #CCC;
-    font-family: 'Roboto' !important;
+    box-shadow: 0 2PX 7px #CCC;
+    font-family:  "Myriad Pro",Arial,Helvetica,sans-serif !important;
 }
 .post img
 {
@@ -39,7 +51,7 @@
 .post .post-img-content
 {
     height: 70px;
-    background-color: orange;
+    background-color: #3172AA;
     position: relative;
 }
 .post .post-img-content img
@@ -57,8 +69,12 @@
    font-size: 20px;
 }
 
+.postbox {
+  margin-bottom: 2%;
+}
+
 b.likes {
-	margin-left: 20px;
+  margin-left: 20px;
 }
 
 div.well h4 {
@@ -70,8 +86,8 @@ div.well h4 {
   margin-top: 5%;
 }
 .lead {
-   font-family: 'Roboto' !important;
-   font-size: 12px;
+   /*font-family: 'Roboto' !important;*/
+   font-size: 14px;
    line-height: 25px;
 }
 .number {
@@ -80,6 +96,11 @@ div.well h4 {
   color: white;
   left: 30px;
   top: -9px;
+}
+
+.row .text-muted {
+  font-family: helvetica;
+  font-size: 11px;
 }
 
 /* creates the rectangle */
@@ -126,12 +147,13 @@ div.well h4 {
 
 .commentBox {
   position:relative;
-  width: 70%;
+  width: 80%;
   height: 100%;
   left: 15%;
   margin:0;
   color:#fff;
-  padding: 20px;
+  font-size: 12px;
+  padding: 15px 20px;
   background:#5a8f00; /* default background for browsers without gradient support */
   /* css3 */
   background:-webkit-gradient(linear, 0 0, 0 100%, from(#b8db29), to(#5a8f00));
@@ -145,7 +167,7 @@ div.well h4 {
 
 /* display of quote author (alternatively use a class on the element following the blockquote) */
 .commOwner {
-    margin:30px 0 2em 85px; 
+    margin:35px 0 2em 85px; 
     font-style:italic;
     font-size: 12px;
 }
@@ -165,9 +187,9 @@ div.well h4 {
 }
 
 .delete {
-   float: right;
+  position: absolute;
    width: 50px;
-   margin-top: -60px;
+   left: 60%;
 }
 
 .commentheading {

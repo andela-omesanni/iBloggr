@@ -29,7 +29,9 @@
 				          <hr>
 				          <p class="lead" data-ng-bind="blog.content"></p>
 
-				          <span data-ng-show="checkLikes(blog.likes)">You liked this Blog</span> 
+				          <span data-ng-show="authentication.user._id && checkLikes(blog.likes)"><strong>You liked this Blog</strong></span> 
+				          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && checkLikes(blog.likes)" data-ng-click="unlikePost()">Unlike</button>
+				          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && !checkLikes(blog.likes)" data-ng-click="likePost()">Like</button>
 					</article>
 
 					<!-- Comment form -->
@@ -51,12 +53,13 @@
 					</div>
                     <h3 class="commentheading">{{blog.comments.length}} Comments</h3>
                     
-                    <div class="commentContainer" data-ng-repeat="comment in blog.comments">
+                    <div class="commentContainer" data-ng-repeat="comment in blog.comments | filter: comment.updated">
 
 	                    <diV class="number"><span>{{$index + 1}}</span></div>
-	                     <div class="commentBox">
+	                     <div class="commentBox clearfix">
+	                     	<img data-ng-src="{{comment.commOwner.gravatar}}" />
 	                     	<span data-ng-bind="comment.commbody"></span>
-	                     </div>
+	                     </div><div style="clear:both;"> </div>
 	                     <div class="delete" data-ng-show="comment.commOwner._id===authentication.user._id">
 
 	                        <a class="btn btn-primary" data-ng-click="deleteComment(comment);">
@@ -64,7 +67,7 @@
 							</a>
 						  </div>
 						 <div class="commOwner text-muted"
-	                       <span> Posted by </span> <span data-ng-bind="comment.commOwner.username"></span> on <span data-ng-bind="comment.updated | date:'mediumDate'"></span>
+	                       <span> Posted by </span> <span data-ng-bind="comment.commOwner.username"></span> on <span data-ng-bind="comment.updated | date:'medium'"></span>
 	                     </div>
 	                       
 	                  </div>

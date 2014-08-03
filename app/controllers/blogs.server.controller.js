@@ -117,32 +117,38 @@ exports.list = function(req, res, next) {
         like = req.body;
         like.user = req.user;
         //blog.likes.push(like);
-    var hasLiked = false;
-
-    for(var i = 0; i < blog.likes.length; i++) {
-       if (req.user.id === blog.likes[i].user.toString()) {
-       	   hasLiked = true;
-       	   break;
-        }
-    }
-    if (!hasLiked) {
-    	blog.likes.push(like);
-
-        blog.save(function(err) {
-		   if (err) {
-			   return res.send(400, {
-			      message: getErrorMessage(err)
-			   });
-			} else {
-	            res.jsonp(blog.likes);
-			}
-	    });
-    } 
-    else {
+    var hasLiked = false; 
+    
+    if (req.user.id === blog.user._id.toString()) { console.log("y");
         return res.send(400, {
-    	   message: 'you have already liked this post before'
-    	});
-    }
+	    	   message: 'You cannot like your own post'
+	    });
+    } else {
+	    for(var i = 0; i < blog.likes.length; i++) {
+	       if (req.user.id === blog.likes[i].user.toString()) {
+	       	   hasLiked = true;
+	       	   break;
+	        }
+	    }
+	    if (!hasLiked) {
+	    	blog.likes.push(like);
+
+	        blog.save(function(err) {
+			   if (err) {
+				   return res.send(400, {
+				      message: getErrorMessage(err)
+				   });
+				} else {
+		            res.jsonp(blog);
+				}
+		    });
+	    } 
+	    else {
+	        return res.send(400, {
+	    	   message: 'you have already liked this post before'
+	    	});
+	    }
+	}
 
  };
 
@@ -150,26 +156,31 @@ exports.list = function(req, res, next) {
  * Unlike a Post
  */
  exports.unlikePost = function(req, res) {
-    var blog = req.blog;
+    var blog = req.blog, index, noLikes = true;
 
     for(var i = 0; i < blog.likes.length; i++){
     	if(req.user.id === blog.likes[i].user.toString()){
-    		blog.likes.id(blog.likes[i]._id).remove();
-    		blog.save(function(err) {
-				if (err) {
-					return res.send(400, {
-						message: getErrorMessage(err)
-					});
-				} else {
-		            return res.jsonp(blog.likes);
-				}
-			});
+    	   index = i;
+    	   noLikes = false;
         }
     }
-
-    return res.send(400, {
-    	message: "user has no likes yet"
-    });
+    
+    if (!noLikes) {
+        blog.likes.id(blog.likes[index]._id).remove();
+		blog.save(function(err) {
+			if (err) {
+				return res.send(400, {
+					message: getErrorMessage(err)
+				});
+			} else {
+	            return res.jsonp(blog);
+			}
+		});
+    } else {
+         return res.send(400, {
+    	   message: "user has no likes yet"
+         });
+    }
 };
 
 /**
