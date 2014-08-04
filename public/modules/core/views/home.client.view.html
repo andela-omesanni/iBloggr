@@ -17,7 +17,7 @@
                         <b class="likes" data-ng-bind="blog.comments.length"> </b> comments
                         <b class="likes" data-ng-bind="blog.likes.length"> </b> likes
                     </div>
-                    <div>
+                    <div class="post-content">
                         <span data-ng-bind="blog.content | limitTo:200"></span>
                         <span data-ng-show="blog.content.length > 200">...</span>
                     </div>
@@ -26,9 +26,11 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div> 
     </div>
    </div>
-
+   <div class="alert alert-warning text-center" data-ng-if="blogs.$resolved && !blogs.length">
+        No Blogs yet<span data-ng-show="authentication.user._id">, why don't you <a href="/#!/blogs/create">create one</a>? </span>
+   </div>
+        
 </section>

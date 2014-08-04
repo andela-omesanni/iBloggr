@@ -187,7 +187,7 @@ exports.list = function(req, res, next) {
  * Blog middleware
  */
 exports.blogByID = function(req, res, next, id) {
-	Blog.findById(id).populate('user', 'username').populate('comments.commOwner','username gravatar').exec(function(err, blog) {
+	Blog.findById(id).populate('user', 'username').populate('comments.commOwner','username gravatar').sort('-comments.updated').exec(function(err, blog) {
 		if (err) return next(err);
 		if (!blog) return next(new Error('Failed to load blog ' + id));
         req.blog = blog;

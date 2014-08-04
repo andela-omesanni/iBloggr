@@ -34,7 +34,9 @@ var UserSchema = new Schema({
 	},
 	username: {
 		type: String,
-		unique: true
+		unique: true,
+		required: 'Please fill in your username',
+		trim: true
 	},
 	password: {
 		type: String,

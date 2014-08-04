@@ -2,7 +2,7 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-10">
 					<article>
 					   <div id="blog-title">
 						  <h1 data-ng-bind="blog.title"></h1>
@@ -56,21 +56,19 @@
                     <h3 class="commentheading">{{blog.comments.length}} Comments</h3>
                     
                     <div class="commentContainer" data-ng-repeat="comment in blog.comments | filter: comment.updated">
-
+                  
 	                    <diV class="number"><span>{{$index + 1}}</span></div>
 	                     <div class="commentBox">
-	                     	<!-- <img data-ng-src="{{comment.commOwner.gravatar}}" /> -->
+	                     	 <img data-ng-src="{{comment.commOwner.gravatar}}" /> 
+	                     	 <span class="text-muted"> Comment by {{comment.commOwner.username}} on {{comment.updated | date:'medium'}}</span>
 	                     	<pre data-ng-bind="comment.commbody"></pre>
-	                     </div>
-						 <div class="commOwner text-muted"
-	                       <span> Posted by </span> <span data-ng-bind="comment.commOwner.username"></span> on <span data-ng-bind="comment.updated | date:'medium'"></span>
 	                     </div>
 	                     <div class="delete" data-ng-show="comment.commOwner._id===authentication.user._id">
 
 	                        <a class="btn btn-primary" data-ng-click="deleteComment(comment);">
 									<i class="glyphicon glyphicon-trash"></i>
 							</a>
-						  </div>
+						  </div><br style="clear:both"/>
 	                  </div>
 
 				    </div>
