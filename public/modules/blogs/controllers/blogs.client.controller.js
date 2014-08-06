@@ -28,7 +28,6 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 			});
 			$scope.blog.comments.push(comment);
 			comment.$save(function(response) {
-				//$location.path('blogs/' + response._id);
 				$scope.blog = response;
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
@@ -70,10 +69,9 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 			$scope.blog = Blogs.get({
 				blogId: $stateParams.blogId
 			});
-			console.log($scope.blog);
 		};
 
-		$scope.deleteComment = function(comment) { console.log(comment);
+		$scope.deleteComment = function(comment) { 
 		   var comm = new Comments({
 		   	     blogId: $scope.blog._id,
 		   	    _id: comment._id,

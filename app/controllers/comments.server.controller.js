@@ -15,7 +15,7 @@ exports.addComment = function(req, res) {
 	var blog = req.blog;
 	var comment = req.body;
 	comment.commOwner = req.user;
-	blog.comments.push(comment);
+	blog.comments.unshift(comment);
 
 	blog.save(function(err) {
 		if (err) {

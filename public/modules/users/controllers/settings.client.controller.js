@@ -38,10 +38,16 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			});
 		};
 
+		 $scope.findUser = function() {
+			$http.get('/users/me').success(function(response) {
+                  $scope.owner = response;
+		    });
+		};
+
 		// Update a user profile
 		$scope.updateUserProfile = function() {
 			$scope.success = $scope.error = null;
-			var user = new Users($scope.user);
+			var user = new Users($scope.owner);
 
 			user.$update(function(response) {
 				$scope.success = true;

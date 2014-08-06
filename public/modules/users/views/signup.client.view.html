@@ -1,47 +1,72 @@
-<section class="row" data-ng-controller="AuthenticationController">
-	<h3 class="col-md-12 text-center">Sign up using your social accounts</h3>
-	<div class="col-md-12 text-center">
-		<a href="/auth/facebook" class="undecorated-link">
-			<img src="/modules/users/img/buttons/facebook.png">
-		</a>
-		<a href="/auth/twitter" class="undecorated-link">
-			<img src="/modules/users/img/buttons/twitter.png">
-		</a>
-		<a href="/auth/google" class="undecorated-link">
-			<img src="/modules/users/img/buttons/google.png">
-		</a>
-		<a href="/auth/linkedin" class="undecorated-link">
-			<img src="/modules/users/img/buttons/linkedin.png">
-		</a>
-	</div>
-	<h3 class="col-md-12 text-center">Or with your email</h3>
+<!-- <section class="row" data-ng-controller="AuthenticationController">
+	<h3 class="col-md-12 text-center">Sign up to start blogging</h3>
 	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2">
-		<form data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
+		<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
 				<div data-ng-show="error" class="text-center text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>
-				<div class="form-group">
+				<div class="form-group" data-ng-class="{'has-error': userForm.email.$invalid && !userForm.email.$pristine }">
 					<label for="email">Email</label>
 					<input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email" required>
+				<p data-ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
 				</div>
-				<div class="form-group">
+				<div class="form-group" data-ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine }">
 					<label for="username">Username</label>
-					<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username" required>
+					<input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username" data-ng-minlength="4" required>
+				<p data-ng-show="userForm.username.$error.minlength" class="help-block">Username should be at least 4 characters long.</p>
 				</div>
-				<div class="form-group">
+				<div class="form-group" data-ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine }">
 					<label for="password">Password</label>
-					<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password" required>
+					<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password" data-ng-minlength="8" required>
+				<p data-ng-show="userForm.password.$error.minlength" class="help-block">Password should be at least 8 characters long.</p>
 				</div>
 				<div class="form-group">
 					<label for="gravatar">Gravatar</label>
 					<input type="url" id="gravatar" name="gravatar" class="form-control" data-ng-model="credentials.gravatar" placeholder="http://" required>
 				</div>
 				<div class="text-center form-group">
-					<button type="submit" class="btn btn-large btn-primary">Sign up</button>&nbsp; or&nbsp;
-					<a href="/#!/signin" class="show-signup">Sign in</a>
+					<button type="submit" class="btn btn-large btn-primary">Sign up</button>&nbsp; or&nbsp; <!-- data-ng-disabled="userForm.$invalid" -->
+					<!-- <a href="/#!/signin" class="show-signup">Sign in</a>
 				</div>
 			</fieldset>
 		</form>
 	</div>
-</section>
+</section> --> 
+<div class="contain effect5" data-ng-controller="AuthenticationController">
+ <div class="row">
+    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+		<form role="form" id="userForm" name="userForm" data-ng-submit="signup()" autocomplete="off">
+			<h2>Please Sign Up <small>It's free and always will be.</small></h2>
+			<hr class="colorgraph">
+			<div data-ng-show="error" class="text-center text-danger">
+					<strong data-ng-bind="error"></strong>
+			</div>
+			<div class="form-group" data-ng-class="{'has-error': userForm.email.$invalid && !userForm.email.$pristine }">
+					<label for="email">Email</label>
+					<input type="email" id="email" name="email" class="form-control input-lg" data-ng-model="credentials.email" placeholder="Email Address" required>
+				<p data-ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+			</div>
+			<div class="form-group" data-ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine }">
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username" class="form-control input-lg" data-ng-model="credentials.username" placeholder="Username" data-ng-minlength="4" required>
+				<p data-ng-show="userForm.username.$error.minlength" class="help-block">Username should be at least 4 characters long.</p>
+			</div>
+			<div class="form-group" data-ng-class="{'has-error': userForm.password.$invalid && !userForm.password.$pristine }">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" class="form-control input-lg" data-ng-model="credentials.password" placeholder="Password" data-ng-minlength="8" required>
+				<p data-ng-show="userForm.password.$error.minlength" class="help-block">Password should be at least 8 characters long.</p>
+				</div>
+				<div class="form-group">
+					<label for="gravatar">Gravatar</label>
+					<input type="url" id="gravatar" name="gravatar" class="form-control input-lg" data-ng-model="credentials.gravatar" placeholder="http://">
+			</div>
+			<hr class="colorgraph">
+			<div class="row">
+				<div class="col-xs-12 col-md-6"><input type="submit" value="Sign Up" class="btn btn-primary btn-block btn-lg"></div>
+				<div class="col-xs-12 col-md-6"><a href="/#!/signin" class="btn btn-success btn-block btn-lg">Sign In</a></div>
+			</div>
+		</form>
+	</div>
+ </div>
+</div>

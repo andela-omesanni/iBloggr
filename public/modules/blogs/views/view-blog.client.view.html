@@ -18,7 +18,7 @@
 
 				        <div class="row">
 				          	
-				          	<div class="col-sm-12 col-md-12 text-muted">
+				          	<div class="col-sm-12 col-md-12 text-muted blog-dashboard">
 				          		<span class="glyphicon glyphicon-user"></span> <span  data-ng-bind="blog.user.username"></span>
 				          		&nbsp;&nbsp
 				          		<span class="glyphicon glyphicon-hand-up"></span> <span data-ng-bind="blog.likes.length"></span> Likes
@@ -59,7 +59,7 @@
                   
 	                    <diV class="number"><span>{{$index + 1}}</span></div>
 	                     <div class="commentBox">
-	                     	 <img data-ng-src="{{comment.commOwner.gravatar}}" /> 
+	                     	 <img data-ng-src="{{comment.commOwner.gravatar}}" width="25" height="25"/> 
 	                     	 <span class="text-muted"> Comment by {{comment.commOwner.username}} on {{comment.updated | date:'medium'}}</span>
 	                     	<pre data-ng-bind="comment.commbody"></pre>
 	                     </div>

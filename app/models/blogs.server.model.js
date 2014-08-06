@@ -7,7 +7,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 
-/*Comment schema*/
+/*Comments schema*/
 var CommentSchema = new Schema({
 	commOwner: {
 	    type: Schema.ObjectId,
