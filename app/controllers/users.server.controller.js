@@ -12,7 +12,7 @@ var mongoose = require('mongoose'),
  * Get the error message from error object
  */
 var getErrorMessage = function(err) {
-    var message = '';
+    var message = ''; console.log(err.code);
 
     if (err.code) {
         switch (err.code) {
@@ -73,42 +73,46 @@ exports.signup = function(req, res) {
  */
 exports.doesEmailExist = function(req, res, next) {
    var email = req.body.email;
-   User.find({email: email}).exec(function(err, user) {
-       if (err) {
-            return res.send(400, {
-                message: "Something went wrong"
-            });
-        } else {
-            if(user.length > 0) {
-                return res.send(400, {
-                   message: "Email address already exists"
-                });
-            }
-            else {
-                next();
-            }
-        }
-   });
+   validateEmail(req, res, next, email, 'signup');
+   // User.find({email: email}).exec(function(err, user) {
+   //     if (err) {
+   //          return res.send(400, {
+   //              message: "Something went wrong"
+   //          });
+   //      } else {
+   //          if(user.length > 0) {
+   //              return res.send(400, {
+   //                 message: "Email address already exists"
+   //              });
+   //          }
+   //          else {
+   //              next();
+   //          }
+   //      }
+   // });
 };
 
-/**
- * Validate email field when a user wants to update it
- */
-exports.checkUpdateEmail = function(req, res, next) {
-   var email = req.body.email;
-   User.find({email: email}).exec(function(err, user) {
+var validateEmail = function(req, res, next, email, forWhich) {
+     //console.log(email + forWhich); next();
+
+     User.find({email: email}).exec(function(err, user) { 
        if (err) {
             return res.send(400, {
                 message: "Something went wrong"
             });
-        } else {
+        } else { 
             if(user.length > 0) {
-
-                if (user.email === email) {
-                    next();
+                if (forWhich === 'update') {console.log(user[0]._id + req.user.id);
+                   if (user[0]._id.toString() === req.user.id) { 
+                       next();
+                    } else { console.log("email");
+                        return res.send(400, {
+                          message: "Email address already exists"
+                        });
+                    }
                 } else {
                     return res.send(400, {
-                       message: "Email address already exists"
+                          message: "Email address already exists"
                     });
                 }
             }
@@ -116,7 +120,36 @@ exports.checkUpdateEmail = function(req, res, next) {
                 next();
             }
         }
-   });
+    });
+};
+
+/**
+ * Validate email field when a user wants to update it
+ */
+exports.checkUpdateEmail = function(req, res, next) {
+   var email = req.body.email; 
+   validateEmail(req, res, next, email, 'update');
+
+   // User.find({email: email}).exec(function(err, me) { 
+   //     if (err) {
+   //          return res.send(400, {
+   //              message: "Something went wrong"
+   //          });
+   //      } else { 
+   //          if(me.length > 0) {
+   //              if (email === me[0].email) {
+   //                  next();
+   //              } else {
+   //                  return res.send(400, {
+   //                     message: "Email address already exists"
+   //                  });
+   //              }
+   //          }
+   //          else {
+   //              next();
+   //          }
+   //      }
+   // });
 };
 
 /**
