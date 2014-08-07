@@ -116,10 +116,9 @@ exports.list = function(req, res, next) {
     var blog = req.blog,
         like = req.body;
         like.user = req.user;
-        //blog.likes.push(like);
     var hasLiked = false; 
     
-    if (req.user.id === blog.user._id.toString()) { console.log("y");
+    if (req.user.id === blog.user._id.toString()) { 
         return res.send(400, {
 	    	   message: 'You cannot like your own post'
 	    });

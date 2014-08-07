@@ -32,6 +32,7 @@ article  {
     overflow: hidden;
     box-shadow: 0 2px 7px #CCC;
     font-family:  'Roboto',"Myriad Pro",Arial,Helvetica,sans-serif !important;
+    height: 278px;
 }
 .post img
 {
@@ -46,7 +47,7 @@ article  {
     padding: 15px;
 }
 
-.post .post-body:hover {
+.post:hover {
    background-color: #FFFF66;
    transition: all  1.2s ease;
 }
@@ -77,6 +78,11 @@ article  {
 }
 
 .post-body .post-content { font-size: 13px; }
+.post-body .read-more {
+   margin-top: 4%; 
+   position:absolute; 
+   bottom: 14px;
+}
 
 .postbox {
   margin-bottom: 2%;
@@ -348,3 +354,14 @@ section.content { margin-top: 20px; }
      .commentBox {  width: 70%; margin-right: 0;}
      .delete { float: left; width: 10px; margin-left: 5px; }
 }
+
+@media screen and (max-width: 1198px) {
+    .post .post-content span { font-size: 12px; margin-right: 9px;}
+    .post-body .read-more { position:absolute; bottom: 9px; }
+    .post { }
+    .postbox { width: 50%;}
+}
+
+@media screen and (max-width: 758px) {
+    .postbox { width: 100%;}
+} 

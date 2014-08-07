@@ -31,17 +31,21 @@
 				          <hr>
 				          <pre class="lead" data-ng-bind="blog.content"></pre>
 
-				          <span data-ng-show="authentication.user._id && checkLikes(blog.likes)"><strong>You liked this Blog</strong></span> 
+				          <span data-ng-show="authentication.user._id && checkLikes(blog.likes)"><strong style="color: green">You liked this Blog</strong></span> 
 				          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && liked" data-ng-click="unlikePost()">Unlike</button>
 				          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && !liked" data-ng-click="likePost()">Like</button>
 					</article>
-
+                    
+                    <div data-ng-show="likeError" class="alert alert-danger">
+                         <a class="close" data-dismiss="alert" data-ng-click="removeError()" href="#">×</a>
+                         <span data-ng-bind="likeError"></span>
+                    </div>
 					<!-- Comment form -->
 					<div class="well">
 						<h4>Leave a comment</h4>
 						<form class="clearfix" data-ng-submit="createComment()" >
 						   <div data-ng-show="error" class="text-danger">
-					          <strong data-ng-bind="error"></strong>
+					         <strong style="margin-left: 15px;" data-ng-bind="error"></strong>
 				          </div>
 						  <div class="col-md-12 form-group">
 						  	<p ng-show="form.commbody.$error.invalid" class="text-danger">Comment cannot be blank.</p>

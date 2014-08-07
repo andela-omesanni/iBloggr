@@ -26,7 +26,7 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 				blogId: $scope.blog._id,
 				commbody: $scope.commbody
 			});
-			$scope.blog.comments.push(comment);
+			//$scope.blog.comments.push(comment);
 			comment.$save(function(response) {
 				$scope.blog = response;
 			}, function(errorResponse) {
@@ -101,7 +101,10 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
             return false;
           
 		};
-
+        
+        $scope.removeError = function() {
+        	$scope.likeError = null;
+        }
 		$scope.likePost = function() {
             var like = new Likes ({
                 blogId: $scope.blog._id,
@@ -115,7 +118,6 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 				$scope.liked = true;
 			}, function(errorResponse) {
 				$scope.likeError = errorResponse.data.message;
-				alert($scope.likeError);
 			});
 		};
 
@@ -136,25 +138,3 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 		};
 	}
 ]);
-
-
-
-angular.module('blogs').directive('checkLength', function() {
-    var usernameRegexp = /^[^.$\[\]#\/\s]+$/;
-
-    return {
-        require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-                ctrl.$parsers.unshift(function(viewValue) {
-                 if (viewValue.length === 0) {
-                        ctrl.$setValidity('invalid', false);
-     
-                        return undefined;
-                 } else {
-                       ctrl.$setValidity('invalid', true);
-                       return viewValue;
-                 }
-               });
-        }
-    };
-});

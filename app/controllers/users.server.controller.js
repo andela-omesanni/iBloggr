@@ -74,26 +74,9 @@ exports.signup = function(req, res) {
 exports.doesEmailExist = function(req, res, next) {
    var email = req.body.email;
    validateEmail(req, res, next, email, 'signup');
-   // User.find({email: email}).exec(function(err, user) {
-   //     if (err) {
-   //          return res.send(400, {
-   //              message: "Something went wrong"
-   //          });
-   //      } else {
-   //          if(user.length > 0) {
-   //              return res.send(400, {
-   //                 message: "Email address already exists"
-   //              });
-   //          }
-   //          else {
-   //              next();
-   //          }
-   //      }
-   // });
 };
 
 var validateEmail = function(req, res, next, email, forWhich) {
-     //console.log(email + forWhich); next();
 
      User.find({email: email}).exec(function(err, user) { 
        if (err) {
@@ -129,27 +112,6 @@ var validateEmail = function(req, res, next, email, forWhich) {
 exports.checkUpdateEmail = function(req, res, next) {
    var email = req.body.email; 
    validateEmail(req, res, next, email, 'update');
-
-   // User.find({email: email}).exec(function(err, me) { 
-   //     if (err) {
-   //          return res.send(400, {
-   //              message: "Something went wrong"
-   //          });
-   //      } else { 
-   //          if(me.length > 0) {
-   //              if (email === me[0].email) {
-   //                  next();
-   //              } else {
-   //                  return res.send(400, {
-   //                     message: "Email address already exists"
-   //                  });
-   //              }
-   //          }
-   //          else {
-   //              next();
-   //          }
-   //      }
-   // });
 };
 
 /**
@@ -208,7 +170,7 @@ exports.update = function(req, res) {
         });
     } else {
         res.send(400, {
-            message: 'User is not signed in'
+            message: 'You are not signed in'
         });
     }
 };
@@ -323,7 +285,7 @@ exports.userByID = function(req, res, next, id) {
 exports.requiresLogin = function(req, res, next) {
     if (!req.isAuthenticated()) {
         return res.send(401, {
-            message: 'User is not logged in'
+            message: 'Please sign in'
         });
     }
 

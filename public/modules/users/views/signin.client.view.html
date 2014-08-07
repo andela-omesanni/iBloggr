@@ -32,6 +32,10 @@
 		<form role="form" id="userForm" name="userForm" data-ng-submit="signin()" autocomplete="off">
 			<h2>Sign into your Account</h2>
 			<hr class="colorgraph">
+			<div data-ng-show="error" class="alert alert-danger">
+                <a class="close" data-dismiss="alert" data-ng-click="removeError()" href="#">×</a>
+                <span data-ng-bind="error"></span>
+            </div>
 			<div class="form-group" data-ng-class="{'has-error': userForm.username.$invalid && !userForm.username.$pristine }">
 					<label for="username">Username</label>
 					<input type="text" id="username" name="username" class="form-control input-lg" data-ng-model="credentials.username" placeholder="Username" data-ng-minlength="4" required>
