@@ -1,13 +1,11 @@
 <section data-ng-controller="HomeController" data-ng-init="find()">
 
-	<div class="container">
+    <div class="container">
     <div class="row">
         <div class="col-sm-4 col-md-4 postbox" data-ng-repeat="blog in blogs">
             <div class="post">
-            	<div class="post-blog-title">
-                    
-                   <h2 data-ng-bind="blog.title  | limitTo:31"></h2>
-                     
+                <div class="post-blog-title">
+                     <h2 data-ng-bind="blog.title  | limitTo:31"></h2>
                 </div>
                
                 <div class="post-body">

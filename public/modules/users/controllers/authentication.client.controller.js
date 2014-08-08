@@ -31,6 +31,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 			});
 		};
 
+        //Allow users the ability to remove error messages from the screen
 		$scope.removeError = function() {
 			$scope.error = null;
 		};

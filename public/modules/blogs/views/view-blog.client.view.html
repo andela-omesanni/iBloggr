@@ -1,83 +1,78 @@
 <section data-ng-controller="BlogsController" data-ng-init="findOne()"
+    <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <article>
+                       <div id="blog-title">
+                          <h1 data-ng-bind="blog.title"></h1>
+                        </div>
+                        <div class="pull-right buttons" data-ng-show="authentication.user._id == blog.user._id">
+                            <a class="btn btn-primary" href="/#!/blogs/{{blog._id}}/edit">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                            <a class="btn btn-primary" data-ng-click="remove();">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </div>
 
-		<div class="container">
-			<div class="row">
-				<div class="col-md-10">
-					<article>
-					   <div id="blog-title">
-						  <h1 data-ng-bind="blog.title"></h1>
-					    </div>
-						<div class="pull-right buttons" data-ng-show="authentication.user._id == blog.user._id">
-							<a class="btn btn-primary" href="/#!/blogs/{{blog._id}}/edit">
-								<i class="glyphicon glyphicon-edit"></i>
-							</a>
-							<a class="btn btn-primary" data-ng-click="remove();">
-								<i class="glyphicon glyphicon-trash"></i>
-							</a>
-						</div>
+                        <div class="row">
+                            
+                            <div class="col-sm-12 col-md-12 text-muted blog-dashboard">
+                                <span class="glyphicon glyphicon-user"></span> <span  data-ng-bind="blog.user.username"></span>
+                                &nbsp;&nbsp
+                                <span class="glyphicon glyphicon-hand-up"></span> <span data-ng-bind="blog.likes.length"></span> Likes
+                                &nbsp;&nbsp;
+                                <span class="glyphicon glyphicon-pencil"></span> <span data-ng-bind="blog.comments.length"></span> Comments                     
+                                &nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> &nbsp;<span data-ng-bind="blog.created | date:'mediumDate'"></span>                  
+                            </div>
+                          </div>
 
-				        <div class="row">
-				          	
-				          	<div class="col-sm-12 col-md-12 text-muted blog-dashboard">
-				          		<span class="glyphicon glyphicon-user"></span> <span  data-ng-bind="blog.user.username"></span>
-				          		&nbsp;&nbsp
-				          		<span class="glyphicon glyphicon-hand-up"></span> <span data-ng-bind="blog.likes.length"></span> Likes
-				          		&nbsp;&nbsp;
-				          		<span class="glyphicon glyphicon-pencil"></span> <span data-ng-bind="blog.comments.length"></span> Comments		          		
-				          		&nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> &nbsp;<span data-ng-bind="blog.created | date:'mediumDate'"></span>	          		
-				          	</div>
-				          </div>
+                          <hr>
+                          <pre class="lead" data-ng-bind="blog.content"></pre>
 
-				          <hr>
-				          <pre class="lead" data-ng-bind="blog.content"></pre>
-
-				          <span data-ng-show="authentication.user._id && checkLikes(blog.likes)"><strong style="color: green">You liked this Blog</strong></span> 
-				          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && liked" data-ng-click="unlikePost()">Unlike</button>
-				          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && !liked" data-ng-click="likePost()">Like</button>
-					</article>
+                          <span data-ng-show="authentication.user._id && checkLikes(blog.likes)"><strong style="color: #5A8F00">You liked this Blog</strong></span> 
+                          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && liked" data-ng-click="unlikeBlog()">Unlike</button>
+                          <button type="button" class="btn btn-primary btn-xs bloglike" data-ng-show="authentication.user._id && !liked" data-ng-click="likeBlog()">Like</button>
+                    </article>
                     
                     <div data-ng-show="likeError" class="alert alert-danger">
                          <a class="close" data-dismiss="alert" data-ng-click="removeError()" href="#">×</a>
                          <span data-ng-bind="likeError"></span>
                     </div>
-					<!-- Comment form -->
-					<div class="well">
-						<h4>Leave a comment</h4>
-						<form class="clearfix" data-ng-submit="createComment()" >
-						   <div data-ng-show="error" class="text-danger">
-					         <strong style="margin-left: 15px;" data-ng-bind="error"></strong>
-				          </div>
-						  <div class="col-md-12 form-group">
-						  	<p ng-show="form.commbody.$error.invalid" class="text-danger">Comment cannot be blank.</p>
-						    <label class="sr-only" for="commbody">Comment</label>
-						    <textarea data-ng-model="commbody" class="form-control" id="commbody" placeholder="Comment" check-length required></textarea>
-						  </div>
-						  <div class="col-md-12 form-group text-left">
-						  	<button type="submit" class="btn btn-primary">Submit</button>
-						  </div>
-						</form>					
-					</div>
+                    <!-- Comment form -->
+                    <div class="well">
+                        <h4>Leave a comment</h4>
+                        <form class="clearfix" data-ng-submit="createComment()" >
+                           <div data-ng-show="error" class="text-danger">
+                             <strong style="margin-left: 15px;" data-ng-bind="error"></strong>
+                          </div>
+                          <div class="col-md-12 form-group">
+                            <p ng-show="form.commbody.$error.invalid" class="text-danger">Comment cannot be blank.</p>
+                            <label class="sr-only" for="commbody">Comment</label>
+                            <textarea data-ng-model="commbody" class="form-control" id="commbody" placeholder="Comment" check-length required></textarea>
+                          </div>
+                          <div class="col-md-12 form-group text-left">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+                        </form>                 
+                    </div>
                     <h3 class="commentheading">{{blog.comments.length}} Comments</h3>
                     
                     <div class="commentContainer" data-ng-repeat="comment in blog.comments | filter: comment.updated">
                   
-	                    <diV class="number"><span>{{$index + 1}}</span></div>
-	                     <div class="commentBox">
-	                     	 <img data-ng-src="{{comment.commOwner.gravatar}}||{{"http://www.gravatar.com/avatar/default"}}" width="25" height="25"/> 
-	                     	 <span class="text-muted"> Comment by {{comment.commOwner.username}} on {{comment.updated | date:'medium'}}</span>
-	                     	<pre data-ng-bind="comment.commbody"></pre>
-	                     </div>
-	                     <div class="delete" data-ng-show="comment.commOwner._id===authentication.user._id">
-
-	                        <a class="btn btn-primary" data-ng-click="deleteComment(comment);">
-									<i class="glyphicon glyphicon-trash"></i>
-							</a>
-						  </div><br style="clear:both"/>
-	                  </div>
-
-				    </div>
-			</div>
-		</div>
-
-
+                        <diV class="number"><span>{{$index + 1}}</span></div>
+                         <div class="commentBox">
+                             <img data-ng-src="{{comment.commOwner.gravatar}}||{{"http://www.gravatar.com/avatar/default"}}" width="25" height="25"/> 
+                             <span class="text-muted"> Comment by {{comment.commOwner.username}} on {{comment.updated | date:'medium'}}</span>
+                            <pre data-ng-bind="comment.commbody"></pre>
+                         </div>
+                         <div class="delete" data-ng-show="comment.commOwner._id===authentication.user._id">
+                            <a class="btn btn-primary" data-ng-click="deleteComment(comment);">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                          </div><br style="clear:both"/>
+                      </div>
+                    </div>
+            </div>
+        </div>
 </section>
