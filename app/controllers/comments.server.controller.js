@@ -46,9 +46,7 @@ exports.deleteComment = function(req, res) {
         else{
             res.jsonp(blog);
         }
-
     });
-
 };
 
 /**
@@ -65,7 +63,7 @@ exports.commByID = function(req, res, next, id) {
 exports.hasAuthorization = function(req, res, next) {
     if (req.comment.commOwner._id.toString() !== req.user.id) {
         return res.send(403, {
-            commMessage: 'User is not authorized'
+            commMessage: 'You are not authorized'
         });
     }
     next();

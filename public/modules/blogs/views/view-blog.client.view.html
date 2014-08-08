@@ -62,7 +62,7 @@
                   
                         <diV class="number"><span>{{$index + 1}}</span></div>
                          <div class="commentBox">
-                             <img data-ng-src="{{comment.commOwner.gravatar}}||{{"http://www.gravatar.com/avatar/default"}}" width="25" height="25"/> 
+                             <img data-ng-src="{{comment.commOwner.gravatar}}||{{'http://www.gravatar.com/avatar'}}" width="25" height="25"/> 
                              <span class="text-muted"> Comment by {{comment.commOwner.username}} on {{comment.updated | date:'medium'}}</span>
                             <pre data-ng-bind="comment.commbody"></pre>
                          </div>

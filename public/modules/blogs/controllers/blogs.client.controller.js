@@ -80,16 +80,9 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
                 commOwner: comment.commOwner
            });
 
-           comm.$remove(function(response) { console.log(response);
-              for (var i in $scope.blog.comments) {
-                if ($scope.blog.comments[i] === comment) {
-                    $scope.blog.comments.splice(i, 1);
-                }
-              }
-            }, function(errorResponse) {
-                $scope.commError = errorResponse.data.commMessage;
-                alert($scope.commError);
-            });
+           comm.$remove(function(response) { 
+             $scope.blog = response; 
+           });
         };
 
         //checks if user has already liked a blog
