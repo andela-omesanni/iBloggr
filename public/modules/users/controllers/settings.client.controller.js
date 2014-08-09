@@ -71,3 +71,28 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 		};
 	}
 ]);
+
+angular.module('users').directive('chMatch', ['$parse', function ($parse) {
+	return {
+		restrict: 'A',
+		require: '?ngModel',
+		link: function(scope, elem, attrs, ctrl) {
+			if(!ctrl) return;
+			if(!attrs['chMatch']) return;
+            console.log("yea");
+            var firstPassword =  $parse(attrs['chMatch']);
+            var validator = function (value) {
+              var temp = firstPassword(scope),
+              v = value === temp;
+              ctrl.$setValidity('match', v);  console.log(v);
+              return value;
+            };
+            ctrl.$parsers.unshift(validator);
+            ctrl.$formatters.push(validator);
+            attrs.$observe('chMatch', function() {
+            	validator(ctrl.$viewValue);
+            });
+		}
+	};
+
+}]);
