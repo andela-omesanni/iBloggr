@@ -37,8 +37,16 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 				$scope.error = response.message;
 			});
 		};
+        
+        $scope.removeAlert = function(message) {
+              if (message === "error") {
+                  $scope.error = null;
+              } else {
+              	  $scope.success = null;
+              }
+        };
 
-		 $scope.findUser = function() {
+		$scope.findUser = function() {
 			$http.get('/users/me').success(function(response) {
                   $scope.owner = response;
 		    });
@@ -72,27 +80,33 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 	}
 ]);
 
-angular.module('users').directive('chMatch', ['$parse', function ($parse) {
-	return {
-		restrict: 'A',
-		require: '?ngModel',
-		link: function(scope, elem, attrs, ctrl) {
-			if(!ctrl) return;
-			if(!attrs['chMatch']) return;
-            console.log("yea");
-            var firstPassword =  $parse(attrs['chMatch']);
-            var validator = function (value) {
-              var temp = firstPassword(scope),
-              v = value === temp;
-              ctrl.$setValidity('match', v);  console.log(v);
-              return value;
-            };
-            ctrl.$parsers.unshift(validator);
-            ctrl.$formatters.push(validator);
-            attrs.$observe('chMatch', function() {
-            	validator(ctrl.$viewValue);
-            });
-		}
-	};
+angular.module('users').directive('ngConfirmField', function () {
+  return {
+    require: 'ngModel',
+    scope: {
+      confirmAgainst: '=',
+    },
+    link: function (scope, iElement, iAttrs, ngModelCtrl) {
 
-}]);
+      var updateValidity = function () {
+        var viewValue = ngModelCtrl.$viewValue;
+        var isValid = isFieldValid();
+        if(ngModelCtrl.$viewValue)
+        ngModelCtrl.$setValidity('noMatch', isValid);
+        // If the field is not valid, return undefined.
+        return isValid ? viewValue : undefined;
+      };
+
+      // Test the confirm field view value matches the confirm against value.
+      var isFieldValid = function () {
+        return ngModelCtrl.$viewValue === scope.confirmAgainst;
+      };
+
+      // Convert data from view format to model format
+      ngModelCtrl.$parsers.push(updateValidity);
+
+      // Watch for changes in the confirmAgainst model.
+      scope.$watch('confirmAgainst', updateValidity);
+    }
+  };
+});
