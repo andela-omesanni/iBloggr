@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-	db: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI || 'mongodb://localhost/ibloggr',
+	db: 'mongodb://heroku:9QymKYS1EeYwOfTvRbb3HIiqgftFmpy-n39SOAY_Faytxgir20FWk_23lkO93k3A79LUsFrmA4f9hcH5sT0LNA@kahana.mongohq.com:10075/app28733147',
 	assets: {
 		lib: {
 			css: [
