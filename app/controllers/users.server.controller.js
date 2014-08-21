@@ -85,7 +85,7 @@ var validateEmail = function(req, res, next, email, forWhich) {
             });
         } else { 
             if(user.length > 0) {
-                if (forWhich === 'update') {console.log(user[0]._id + req.user.id);
+                if (forWhich === 'update') {
                    if (user[0]._id.toString() === req.user.id) { 
                        next();
                     } else { console.log("email");

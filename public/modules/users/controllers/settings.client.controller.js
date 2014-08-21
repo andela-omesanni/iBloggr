@@ -68,6 +68,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 		// Change user password
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
+			$scope.userForm.$setPristine();
 
 			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
 				// If successful show success message and clear form
