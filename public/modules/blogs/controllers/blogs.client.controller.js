@@ -99,7 +99,7 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
         //remove error message associated with liking a blog
         $scope.removeError = function() {
             $scope.likeError = null;
-        }
+        };
         
         //like a blog
         $scope.likeBlog = function() {
