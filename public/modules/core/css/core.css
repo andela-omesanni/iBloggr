@@ -25,6 +25,7 @@ article  {
 #blog-title { float: left; width: 80%; padding: 0; word-wrap: break-word; }
 #blog-title h1 { padding: 0 0 20px 0; margin: 0; }
 .pull-right.buttons { margin: 8px 0px 0 0px; }
+.not-found { margin: 10% auto; }
 
 .post
 {

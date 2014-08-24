@@ -4,11 +4,8 @@
 angular.module('blogs').config(['$stateProvider',
 	function($stateProvider) {
 		// Blogs state routing
+		
 		$stateProvider.
-		state('listBlogs', {
-			url: '/blogs',
-			templateUrl: 'modules/blogs/views/list-blog.client.view.html'
-		}).
 		state('createBlog', {
 			url: '/blogs/create',
 			templateUrl: 'modules/blogs/views/create-blog.client.view.html'
@@ -20,6 +17,9 @@ angular.module('blogs').config(['$stateProvider',
 		state('editBlog', {
 			url: '/blogs/:blogId/edit',
 			templateUrl: 'modules/blogs/views/edit-blog.client.view.html'
+		}).
+		state('otherwise', {
+			url: '#!/'
 		});
 	}
 ]);

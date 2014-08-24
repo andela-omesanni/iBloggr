@@ -54,6 +54,15 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
             }
         };
 
+        $scope.checkBlog = function() {
+            console.log("in here");
+            if (typeof $scope.blog.length === "undefined") {
+                console.log("true");
+                return true;
+            }
+            console.log($scope.blog.length);
+        };
+
         //update a blog
         $scope.update = function() {
             var blog = $scope.blog;
@@ -67,9 +76,17 @@ angular.module('blogs').controller('BlogsController', ['$scope', '$stateParams',
 
         //retrieve only one blog
         $scope.findOne = function() {
-            $scope.blog = Blogs.get({
-                blogId: $stateParams.blogId
-            });
+            if ($stateParams.blogId !== "") {
+               Blogs.get({
+                  blogId: $stateParams.blogId
+               }, function success(response) {
+                    $scope.blog = response;
+               }, function(errorResponse) {
+                    $scope.errorMess = errorResponse;
+               });
+            } else {
+                 $scope.errorMess = 'Oops!! Blog doesn\'t exist';
+            }
         };
 
         //delete a comment

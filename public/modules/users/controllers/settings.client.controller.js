@@ -6,6 +6,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
+		$scope.EMAIL_REGEXP = 	/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+		$scope.url_regex = /^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})?$/;
 
 		// Check if there are additional accounts 
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {

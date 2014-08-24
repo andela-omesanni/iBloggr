@@ -1,4 +1,5 @@
 <section data-ng-controller="BlogsController" data-ng-init="findOne()">
+  <div data-ng-show="!errorMess">
     <div class="page-header">
         <h1>Edit Blogs</h1>
     </div>
@@ -26,4 +27,9 @@
             </fieldset>
         </form>
     </div>
+   </div>
+
+    <div class="alert alert-warning text-center not-found" data-ng-show="errorMess" >
+          <p>Oops!! The Blog you are looking for doesn't exist</p>
+    </div>  
 </section>

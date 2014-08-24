@@ -1,5 +1,5 @@
-<section data-ng-controller="BlogsController" data-ng-init="findOne()"
-    <div class="container">
+<section data-ng-controller="BlogsController" data-ng-init="findOne()">
+    <div class="container" data-ng-show="!errorMess">
             <div class="row">
                 <div class="col-md-10">
                     <article>
@@ -70,9 +70,12 @@
                             <a class="btn btn-primary" data-ng-click="deleteComment(comment);">
                                 <i class="glyphicon glyphicon-trash"></i>
                             </a>
-                          </div><br style="clear:both"/>
+                          </div><br style="clear:both"/> 
                       </div>
                     </div>
             </div>
         </div>
+        <div class="alert alert-warning text-center not-found" data-ng-show="errorMess" >
+           <p>Oops!! The Blog you are looking for doesn't exist</p>
+       </div>  
 </section>
