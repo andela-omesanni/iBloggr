@@ -59,10 +59,7 @@ angular.module('blogs').config([
   '$stateProvider',
   function ($stateProvider) {
     // Blogs state routing
-    $stateProvider.state('listBlogs', {
-      url: '/blogs',
-      templateUrl: 'modules/blogs/views/list-blog.client.view.html'
-    }).state('createBlog', {
+    $stateProvider.state('createBlog', {
       url: '/blogs/create',
       templateUrl: 'modules/blogs/views/create-blog.client.view.html'
     }).state('viewBlog', {
@@ -71,7 +68,7 @@ angular.module('blogs').config([
     }).state('editBlog', {
       url: '/blogs/:blogId/edit',
       templateUrl: 'modules/blogs/views/edit-blog.client.view.html'
-    });
+    }).state('otherwise', { url: '#!/' });
   }
 ]);'use strict';
 angular.module('blogs').controller('BlogsController', [
@@ -127,6 +124,14 @@ angular.module('blogs').controller('BlogsController', [
         });
       }
     };
+    $scope.checkBlog = function () {
+      console.log('in here');
+      if (typeof $scope.blog.length === 'undefined') {
+        console.log('true');
+        return true;
+      }
+      console.log($scope.blog.length);
+    };
     //update a blog
     $scope.update = function () {
       var blog = $scope.blog;
@@ -138,7 +143,15 @@ angular.module('blogs').controller('BlogsController', [
     };
     //retrieve only one blog
     $scope.findOne = function () {
-      $scope.blog = Blogs.get({ blogId: $stateParams.blogId });
+      if ($stateParams.blogId !== '') {
+        Blogs.get({ blogId: $stateParams.blogId }, function success(response) {
+          $scope.blog = response;
+        }, function (errorResponse) {
+          $scope.errorMess = errorResponse;
+        });
+      } else {
+        $scope.errorMess = 'Oops!! Blog doesn\'t exist';
+      }
     };
     //delete a comment
     $scope.deleteComment = function (comment) {
@@ -472,6 +485,66 @@ angular.module('users').controller('AuthenticationController', [
     //If user is signed in then redirect back home
     if ($scope.authentication.user)
       $location.path('/');
+    $scope.EMAIL_REGEXP = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    $scope.url_regex = /^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})?$/;
+    $scope.choiceOne = [
+      { id: 'choice1' },
+      { id: 'choice2' }
+    ];
+    $scope.choiceTwo = [
+      { id: 'choice1' },
+      { id: 'choice2' }
+    ];
+    $scope.optionOne = [];
+    $scope.optionTwo = [];
+    $scope.questions = [];
+    $scope.selected = '';
+    $scope.setShow = function (val) {
+      $scope.selected = val;
+    };
+    $scope.isSelected = function (val) {
+      return val === $scope.selected;
+    };
+    $scope.addNewChoice = function (num) {
+      var newItemNo;
+      if (num === 1) {
+        newItemNo = $scope.choiceOne.length + 1;
+        $scope.choiceOne.push({ id: 'choice' + newItemNo });
+      } else {
+        newItemNo = $scope.choiceTwo.length + 1;
+        $scope.choiceTwo.push({ id: 'choice' + newItemNo });
+      }
+    };
+    $scope.deleteChoice = function (index, num) {
+      if (num === 1) {
+        if ($scope.choiceOne.length === 2) {
+          alert('sorry u can\'t touch this');
+        } else {
+          $scope.choiceOne.splice(index, 1);
+          $scope.optionOne.splice(index, 1);
+          changeIds($scope.choiceOne);
+        }
+      } else {
+        if ($scope.choiceTwo.length === 2) {
+          alert('sorry u can\'t touch this');
+        } else {
+          $scope.choiceTwo.splice(index, 1);
+          $scope.optionTwo.splice(index, 1);
+          changeIds($scope.choiceTwo);
+        }
+      }
+    };
+    var changeIds = function (array) {
+      for (var i in array) {
+        array[i].id = 'choice' + i;
+      }
+    };
+    $scope.showAddChoice = function (choice, num) {
+      if (num === 1)
+        return choice.id === $scope.choiceOne[$scope.choiceOne.length - 1].id;
+      else
+        return choice.id === $scope.choiceTwo[$scope.choiceTwo.length - 1].id;
+    };
     $scope.signup = function () {
       $http.post('/auth/signup', $scope.credentials).success(function (response) {
         //If successful we assign the response to the global user model
@@ -509,6 +582,8 @@ angular.module('users').controller('SettingsController', [
     // If user is not signed in then redirect back home
     if (!$scope.user)
       $location.path('/');
+    $scope.EMAIL_REGEXP = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    $scope.url_regex = /^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})?$/;
     // Check if there are additional accounts 
     $scope.hasConnectedAdditionalSocialAccounts = function (provider) {
       for (var i in $scope.user.additionalProvidersData) {
